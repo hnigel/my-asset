@@ -1,107 +1,78 @@
-# Implementation Plan: Automatic Stock Price Fetching
+# Implementation Plan: Edit and Delete Holdings Functionality
 
-## Current State Analysis
-- **StockPriceService.swift**: Already has Alpha Vantage API integration but uses "demo" API key and fallback demo data
-- **AddHoldingSheet.swift**: Currently requires manual price input via `pricePerShare` field
-- **PortfolioManager.swift**: Uses manual price for calculations, has Core Data integration
-- **BackgroundUpdateService.swift**: Updates stock prices but uses demo data
+## Overview
+Adding edit and delete functionality for holdings in the iOS portfolio app. The app already has solid foundations with PortfolioManager methods `updateHolding()` and `deleteHolding()` implemented.
 
-## Goal
-Transform the app from manual price entry to automatic stock price fetching when user enters only the ticker symbol.
+## STATUS: COMPLETE ✅
+All stages have been successfully implemented with comprehensive functionality for editing and deleting holdings.
 
-## API Choice Decision
-- **Yahoo Finance API**: Free, reliable, no API key required for basic quotes
-- **Alternative**: Alpha Vantage (current) requires API key but has good documentation
-- **Recommendation**: Switch to Yahoo Finance for simplicity and reliability
+## Current Architecture Analysis
+- **PortfolioManager**: Already has `updateHolding()` and `deleteHolding()` methods
+- **PortfolioDetailView**: Contains HoldingsListView with swipe-to-delete partially implemented
+- **AddHoldingSheet**: Good reference for form UI patterns and validation
+- **Core Data**: Portfolio -> Holdings -> Stock relationship established
 
-## Stage 1: Enhance StockPriceService for Production Use
-**Goal**: Make StockPriceService production-ready with real API integration
+## Stage 1: Enhance Delete Functionality
+**Goal**: Improve the existing swipe-to-delete with confirmation dialogs
 **Success Criteria**: 
-- Service can fetch real stock prices from Yahoo Finance API (free alternative to Alpha Vantage) ✓
-- Proper error handling and retry logic ✓
-- Caching mechanism to avoid excessive API calls ✓
-**Tests**: Unit tests for API calls, error handling, and caching
+- Swipe-to-delete shows confirmation alert
+- Delete operations are properly confirmed before execution
+- UI refreshes correctly after deletion
+**Tests**: 
+- Delete holding and verify removal from list
+- Cancel delete confirmation and verify holding remains
+- Delete multiple holdings in sequence
 **Status**: Complete
 
-## Stage 2: Update AddHoldingSheet UI
-**Goal**: Remove manual price input and add automatic price fetching with loading states
+## Stage 2: Create EditHoldingSheet Component
+**Goal**: Build a dedicated sheet for editing holding details
 **Success Criteria**:
-- Price input field removed ✓
-- Loading indicator while fetching price ✓
-- Error handling for failed price fetches ✓
-- Auto-populate price when symbol is entered ✓
-**Tests**: UI tests for loading states and error scenarios
+- Pre-populates with current holding data
+- Allows editing quantity and purchase price
+- Validates input and shows current vs original investment
+- Integrates with PortfolioManager.updateHolding()
+**Tests**:
+- Edit quantity and verify calculation updates
+- Edit price and verify total investment changes
+- Cancel edit and verify no changes applied
+- Save edit and verify Core Data persistence
 **Status**: Complete
 
-## Stage 3: Integrate Auto-Fetching into PortfolioManager
-**Goal**: Modify portfolio management to use auto-fetched prices
+## Stage 3: Add Edit Functionality to Holdings List
+**Goal**: Integrate edit functionality into the holdings display
 **Success Criteria**:
-- addHolding method uses fetched price instead of manual input ✓
-- Current price is updated when adding holdings ✓
-- Existing functionality remains intact ✓
-**Tests**: Integration tests for portfolio calculations with auto-fetched prices
+- Tap-to-edit functionality on holding rows
+- Swipe actions for both edit and delete
+- Smooth sheet presentation and dismissal
+**Tests**:
+- Tap holding to open edit sheet
+- Use swipe action to open edit sheet
+- Multiple edit operations in sequence
 **Status**: Complete
 
-## Stage 4: Update BackgroundUpdateService
-**Goal**: Ensure background updates use the same enhanced API service
+## Stage 4: Enhanced User Experience Features
+**Goal**: Add polish and error handling
 **Success Criteria**:
-- Background service uses production API instead of demo data ✓
-- Proper rate limiting and error handling ✓
-- Updates happen without user intervention ✓
-**Tests**: Background update functionality tests
+- Loading states during updates
+- Error handling for failed operations
+- Real-time value calculations in edit sheet
+- Proper keyboard handling and form validation
+**Tests**:
+- Test with network failures
+- Test with invalid input values
+- Test keyboard interactions
+- Test concurrent edit attempts
 **Status**: Complete
 
-## Stage 5: Add Comprehensive Error Handling & User Experience
-**Goal**: Handle edge cases and provide excellent user experience
+## Stage 5: Testing and Refinement
+**Goal**: Comprehensive testing and UX improvements
 **Success Criteria**:
-- Network connectivity issues handled gracefully ✓
-- Invalid stock symbols handled with clear error messages ✓
-- Retry mechanisms for failed requests ✓
-- Offline support with cached data ✓
-**Tests**: Error scenario tests and offline functionality ✓
+- All edge cases handled gracefully
+- Consistent UI/UX with existing app patterns
+- Performance optimized for large holding lists
+**Tests**:
+- Test with empty portfolios
+- Test with single holding portfolios
+- Test rapid edit/delete sequences
+- Test with very large quantities/prices
 **Status**: Complete
-
-## Implementation Summary
-
-**✅ COMPLETED: All Stages of Automatic Stock Price Fetching**
-
-The automatic stock price fetching functionality has been successfully implemented with the following key improvements:
-
-### Enhanced StockPriceService (Stage 1)
-- **Yahoo Finance API Integration**: Switched from Alpha Vantage demo to Yahoo Finance for free, reliable stock quotes
-- **Intelligent Caching**: 5-minute cache validity to reduce API calls and improve performance
-- **Robust Error Handling**: Comprehensive error types with user-friendly descriptions
-- **Concurrent Fetching**: Multiple stock prices fetched concurrently for better performance
-
-### Updated User Interface (Stage 2)
-- **Automatic Price Fetching**: Users only need to enter stock symbol, price is fetched automatically
-- **Real-time Loading States**: Loading indicators and progress feedback
-- **Smart Input Handling**: Auto-fetch on symbol entry with debounced requests
-- **Rich Data Display**: Shows company name, current price, and total investment calculation
-- **Error Feedback**: Clear error messages for invalid symbols or network issues
-
-### Portfolio Management Integration (Stage 3)
-- **Seamless Integration**: New async method for adding holdings with auto-fetched prices
-- **Stock Data Enhancement**: Automatic company name and current price updates
-- **Portfolio Price Updates**: Background method to refresh all portfolio holdings
-- **Backward Compatibility**: Existing manual price entry method preserved
-
-### Background Service Enhancement (Stage 4)
-- **Production API Usage**: Background updates now use real Yahoo Finance data
-- **Improved Performance**: Concurrent fetching for multiple stocks
-- **Better Error Handling**: Graceful handling of failed requests with proper logging
-
-### Comprehensive Testing (Stage 5)
-- **Unit Tests**: StockPriceService caching, error handling, and validation
-- **Integration Tests**: Portfolio manager with auto-fetched prices
-- **UI Flow Tests**: AddHoldingSheet with automatic price fetching
-- **Edge Case Coverage**: Invalid symbols, network errors, empty portfolios
-- **Mock Objects**: MockStockPriceService for reliable testing
-
-### Key Technical Achievements
-- **Free API**: No API key required for Yahoo Finance basic quotes
-- **Smart Caching**: 5-minute cache reduces redundant API calls
-- **Error Recovery**: Multiple fallback strategies for failed requests
-- **User Experience**: Seamless flow from symbol entry to holding creation
-- **Performance**: Concurrent API calls and optimized data flow
-- **Testing**: Comprehensive test coverage for reliability

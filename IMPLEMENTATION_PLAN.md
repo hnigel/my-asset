@@ -1,78 +1,68 @@
-# Implementation Plan: Edit and Delete Holdings Functionality
+# Implementation Plan: Eliminate Demo Data & Implement Manual Input
 
 ## Overview
-Adding edit and delete functionality for holdings in the iOS portfolio app. The app already has solid foundations with PortfolioManager methods `updateHolding()` and `deleteHolding()` implemented.
+Remove all hallucinated/demo data generation from the stock price service and implement proper N/A handling with manual input functionality for prices and dividends.
 
-## STATUS: COMPLETE ✅
-All stages have been successfully implemented with comprehensive functionality for editing and deleting holdings.
-
-## Current Architecture Analysis
-- **PortfolioManager**: Already has `updateHolding()` and `deleteHolding()` methods
-- **PortfolioDetailView**: Contains HoldingsListView with swipe-to-delete partially implemented
-- **AddHoldingSheet**: Good reference for form UI patterns and validation
-- **Core Data**: Portfolio -> Holdings -> Stock relationship established
-
-## Stage 1: Enhance Delete Functionality
-**Goal**: Improve the existing swipe-to-delete with confirmation dialogs
+## Stage 1: Remove All Demo/Hallucinated Data Generation
+**Goal**: Completely eliminate all demo data generation methods from StockPriceService
 **Success Criteria**: 
-- Swipe-to-delete shows confirmation alert
-- Delete operations are properly confirmed before execution
-- UI refreshes correctly after deletion
+- No more demo data generation methods in StockPriceService.swift
+- APIs return nil/proper errors when they fail
+- No fake/random numbers generated anywhere
 **Tests**: 
-- Delete holding and verify removal from list
-- Cancel delete confirmation and verify holding remains
-- Delete multiple holdings in sequence
+- Verify fetchStockPrice throws proper errors when APIs fail
+- Confirm no demo data appears in UI when APIs are unavailable
+- Test fetchDistributionInfo returns proper nil values
 **Status**: Complete
 
-## Stage 2: Create EditHoldingSheet Component
-**Goal**: Build a dedicated sheet for editing holding details
+## Stage 2: Update Data Models for N/A Handling  
+**Goal**: Modify Core Data models to handle missing data gracefully
 **Success Criteria**:
-- Pre-populates with current holding data
-- Allows editing quantity and purchase price
-- Validates input and shows current vs original investment
-- Integrates with PortfolioManager.updateHolding()
+- Add optional user-provided price/dividend fields to Stock entity
+- Add flags to distinguish API vs user-provided data
+- Ensure all price calculations handle nil values properly
 **Tests**:
-- Edit quantity and verify calculation updates
-- Edit price and verify total investment changes
-- Cancel edit and verify no changes applied
-- Save edit and verify Core Data persistence
+- Test Core Data schema migration
+- Verify calculations work with missing data
+- Confirm N/A values display correctly
 **Status**: Complete
 
-## Stage 3: Add Edit Functionality to Holdings List
-**Goal**: Integrate edit functionality into the holdings display
+## Stage 3: Implement Manual Input UI
+**Goal**: Add UI components for manual data entry
 **Success Criteria**:
-- Tap-to-edit functionality on holding rows
-- Swipe actions for both edit and delete
-- Smooth sheet presentation and dismissal
+- "Add manually" buttons when data is N/A
+- Edit sheets for price and dividend input
+- Clear indication of data source (API vs manual)
+- User data persists in Core Data
 **Tests**:
-- Tap holding to open edit sheet
-- Use swipe action to open edit sheet
-- Multiple edit operations in sequence
+- Test manual price input functionality
+- Test manual dividend input functionality  
+- Verify data source indicators work correctly
+- Test data persistence across app sessions
 **Status**: Complete
 
-## Stage 4: Enhanced User Experience Features
-**Goal**: Add polish and error handling
+## Stage 4: Update Stock Price Service N/A Handling
+**Goal**: Implement proper error handling and N/A returns
 **Success Criteria**:
-- Loading states during updates
-- Error handling for failed operations
-- Real-time value calculations in edit sheet
-- Proper keyboard handling and form validation
+- Return nil or throw errors instead of demo data
+- Clear error messages for users
+- Proper fallback to user-provided data when available
 **Tests**:
-- Test with network failures
-- Test with invalid input values
-- Test keyboard interactions
-- Test concurrent edit attempts
+- Test all API failure scenarios
+- Verify proper error propagation to UI
+- Test fallback to manual data works correctly
 **Status**: Complete
 
-## Stage 5: Testing and Refinement
-**Goal**: Comprehensive testing and UX improvements
+## Stage 5: Integration Testing & UI Updates
+**Goal**: Ensure all components work together properly
 **Success Criteria**:
-- All edge cases handled gracefully
-- Consistent UI/UX with existing app patterns
-- Performance optimized for large holding lists
+- All existing functionality preserved
+- N/A states display correctly throughout app
+- Manual input integrates seamlessly
+- No demo data appears anywhere
 **Tests**:
-- Test with empty portfolios
-- Test with single holding portfolios
-- Test rapid edit/delete sequences
-- Test with very large quantities/prices
-**Status**: Complete
+- End-to-end testing of stock addition with API failures
+- Test portfolio calculations with mixed API/manual data
+- Verify export functionality works with new data model
+- Test background updates respect manual overrides
+**Status**: Not Started

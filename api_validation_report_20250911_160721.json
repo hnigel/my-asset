@@ -1,0 +1,237 @@
+{
+  "apis_tested": [
+    "yahoo_chart",
+    "yahoo_quotesummary",
+    "iex_sandbox"
+  ],
+  "test_timestamp": "2025-09-11T16:07:21.450650",
+  "symbols_tested": [
+    "AAPL",
+    "MSFT",
+    "SPY",
+    "SCHD",
+    "VYM",
+    "INVALID_SYMBOL"
+  ],
+  "results_by_api": {
+    "yahoo_chart": {
+      "success_count": 5,
+      "total_count": 6,
+      "success_rate_percent": 83.33333333333334,
+      "results": {
+        "AAPL": {
+          "status": "success",
+          "price": 226.79,
+          "name": "Apple Inc.",
+          "api": "yahoo_chart"
+        },
+        "MSFT": {
+          "status": "success",
+          "price": 500.37,
+          "name": "Microsoft Corporation",
+          "api": "yahoo_chart"
+        },
+        "SPY": {
+          "status": "success",
+          "price": 652.21,
+          "name": "SPDR S&P 500 ETF",
+          "api": "yahoo_chart"
+        },
+        "SCHD": {
+          "status": "success",
+          "price": 27.5,
+          "name": "Schwab U.S. Dividend Equity ETF",
+          "api": "yahoo_chart"
+        },
+        "VYM": {
+          "status": "success",
+          "price": 140.78,
+          "name": "Vanguard High Dividend Yield Index Fund ETF Shares",
+          "api": "yahoo_chart"
+        },
+        "INVALID_SYMBOL": {
+          "status": "not_found",
+          "api": "yahoo_chart"
+        }
+      }
+    },
+    "yahoo_quotesummary": {
+      "success_count": 0,
+      "total_count": 6,
+      "success_rate_percent": 0.0,
+      "results": {
+        "AAPL": {
+          "status": "http_error_401",
+          "api": "yahoo_quotesummary"
+        },
+        "MSFT": {
+          "status": "http_error_401",
+          "api": "yahoo_quotesummary"
+        },
+        "SPY": {
+          "status": "http_error_401",
+          "api": "yahoo_quotesummary"
+        },
+        "SCHD": {
+          "status": "http_error_401",
+          "api": "yahoo_quotesummary"
+        },
+        "VYM": {
+          "status": "http_error_401",
+          "api": "yahoo_quotesummary"
+        },
+        "INVALID_SYMBOL": {
+          "status": "http_error_401",
+          "api": "yahoo_quotesummary"
+        }
+      }
+    },
+    "iex_sandbox": {
+      "success_count": 0,
+      "total_count": 6,
+      "success_rate_percent": 0.0,
+      "results": {
+        "AAPL": {
+          "status": "request_error",
+          "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/aapl/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10674a4f0>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+          "api": "iex_sandbox"
+        },
+        "MSFT": {
+          "status": "request_error",
+          "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/msft/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10674a490>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+          "api": "iex_sandbox"
+        },
+        "SPY": {
+          "status": "request_error",
+          "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/spy/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x1066a6fd0>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+          "api": "iex_sandbox"
+        },
+        "SCHD": {
+          "status": "request_error",
+          "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/schd/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10674a700>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+          "api": "iex_sandbox"
+        },
+        "VYM": {
+          "status": "request_error",
+          "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/vym/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10674a6a0>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+          "api": "iex_sandbox"
+        },
+        "INVALID_SYMBOL": {
+          "status": "request_error",
+          "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/invalid_symbol/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10674aca0>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+          "api": "iex_sandbox"
+        }
+      }
+    }
+  },
+  "overall_assessment": {
+    "status": "GOOD",
+    "primary_apis_functional": false,
+    "real_data_available": true,
+    "fallback_available": true,
+    "rate_limiting_implemented": true,
+    "error_handling_implemented": true
+  },
+  "raw_results": {
+    "AAPL": {
+      "yahoo_chart": {
+        "status": "success",
+        "price": 226.79,
+        "name": "Apple Inc.",
+        "api": "yahoo_chart"
+      },
+      "yahoo_quotesummary": {
+        "status": "http_error_401",
+        "api": "yahoo_quotesummary"
+      },
+      "iex_sandbox": {
+        "status": "request_error",
+        "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/aapl/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10674a4f0>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+        "api": "iex_sandbox"
+      }
+    },
+    "MSFT": {
+      "yahoo_chart": {
+        "status": "success",
+        "price": 500.37,
+        "name": "Microsoft Corporation",
+        "api": "yahoo_chart"
+      },
+      "yahoo_quotesummary": {
+        "status": "http_error_401",
+        "api": "yahoo_quotesummary"
+      },
+      "iex_sandbox": {
+        "status": "request_error",
+        "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/msft/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10674a490>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+        "api": "iex_sandbox"
+      }
+    },
+    "SPY": {
+      "yahoo_chart": {
+        "status": "success",
+        "price": 652.21,
+        "name": "SPDR S&P 500 ETF",
+        "api": "yahoo_chart"
+      },
+      "yahoo_quotesummary": {
+        "status": "http_error_401",
+        "api": "yahoo_quotesummary"
+      },
+      "iex_sandbox": {
+        "status": "request_error",
+        "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/spy/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x1066a6fd0>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+        "api": "iex_sandbox"
+      }
+    },
+    "SCHD": {
+      "yahoo_chart": {
+        "status": "success",
+        "price": 27.5,
+        "name": "Schwab U.S. Dividend Equity ETF",
+        "api": "yahoo_chart"
+      },
+      "yahoo_quotesummary": {
+        "status": "http_error_401",
+        "api": "yahoo_quotesummary"
+      },
+      "iex_sandbox": {
+        "status": "request_error",
+        "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/schd/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10674a700>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+        "api": "iex_sandbox"
+      }
+    },
+    "VYM": {
+      "yahoo_chart": {
+        "status": "success",
+        "price": 140.78,
+        "name": "Vanguard High Dividend Yield Index Fund ETF Shares",
+        "api": "yahoo_chart"
+      },
+      "yahoo_quotesummary": {
+        "status": "http_error_401",
+        "api": "yahoo_quotesummary"
+      },
+      "iex_sandbox": {
+        "status": "request_error",
+        "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/vym/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10674a6a0>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+        "api": "iex_sandbox"
+      }
+    },
+    "INVALID_SYMBOL": {
+      "yahoo_chart": {
+        "status": "not_found",
+        "api": "yahoo_chart"
+      },
+      "yahoo_quotesummary": {
+        "status": "http_error_401",
+        "api": "yahoo_quotesummary"
+      },
+      "iex_sandbox": {
+        "status": "request_error",
+        "error": "HTTPSConnectionPool(host='sandbox.iexapis.com', port=443): Max retries exceeded with url: /stable/stock/invalid_symbol/quote?token=Tpk_029b97af715d417d9b7c8ba3afc3fb5 (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10674aca0>: Failed to establish a new connection: [Errno 61] Connection refused'))",
+        "api": "iex_sandbox"
+      }
+    }
+  }
+}

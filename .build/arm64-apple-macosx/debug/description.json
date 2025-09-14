@@ -1,0 +1,452 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+    "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/my-asset_MyAsset.bundle/AssetModel.xcdatamodeld" : {
+      "inputs" : [
+        {
+          "kind" : "directory",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/AssetModel.xcdatamodeld"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "directory",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/my-asset_MyAsset.bundle/AssetModel.xcdatamodeld"
+        }
+      ]
+    },
+    "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/my-asset_MyAsset.bundle/Assets.xcassets" : {
+      "inputs" : [
+        {
+          "kind" : "directory",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/Assets.xcassets"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "directory",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/my-asset_MyAsset.bundle/Assets.xcassets"
+        }
+      ]
+    }
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.MyAsset-arm64-apple-macosx26.0-debug.module" : {
+      "executable" : "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "fileList" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/sources",
+      "importPath" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/AddHoldingSheet.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/BackgroundUpdateService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/ContentView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/CoreDataExtensions.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/DataManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/EditHoldingSheet.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/ExportManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/ExportSheet.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioChartView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioDetailView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioListView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/StockPriceService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/my_assetApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/DerivedSources/resource_bundle_accessor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+        },
+        {
+          "kind" : "virtual",
+          "name" : "<MyAsset-arm64-apple-macosx26.0-debug.module-resources>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "MyAsset",
+      "moduleOutputPath" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/Modules/MyAsset.swiftmodule",
+      "objects" : [
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/AddHoldingSheet.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/BackgroundUpdateService.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/ContentView.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/CoreDataExtensions.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/DataManager.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/EditHoldingSheet.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/ExportManager.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/ExportSheet.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/PortfolioChartView.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/PortfolioDetailView.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/PortfolioListView.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/PortfolioManager.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/StockPriceService.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/my_assetApp.swift.o",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/resource_bundle_accessor.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_AVAILABLE",
+        "-module-cache-path",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/include/MyAsset-Swift.h",
+        "-swift-version",
+        "5",
+        "-I",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-L",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-plugin-path",
+        "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "my_asset"
+      ],
+      "outputFileMapPath" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/AddHoldingSheet.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/BackgroundUpdateService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/ContentView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/CoreDataExtensions.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/DataManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/EditHoldingSheet.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/ExportManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/ExportSheet.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/PortfolioChartView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/PortfolioDetailView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/PortfolioListView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/PortfolioManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/StockPriceService.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/my_assetApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/resource_bundle_accessor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/Modules/MyAsset.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/hnigel/coding/my asset/my asset/my asset/AddHoldingSheet.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/BackgroundUpdateService.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/ContentView.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/CoreDataExtensions.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/DataManager.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/EditHoldingSheet.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/ExportManager.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/ExportSheet.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioChartView.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioDetailView.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioListView.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioManager.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/StockPriceService.swift",
+        "/Users/hnigel/coding/my asset/my asset/my asset/my_assetApp.swift",
+        "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/DerivedSources/resource_bundle_accessor.swift"
+      ],
+      "tempsPath" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "MyAsset" : [
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "-module-name",
+      "MyAsset",
+      "-package-name",
+      "my_asset",
+      "-c",
+      "/Users/hnigel/coding/my asset/my asset/my asset/AddHoldingSheet.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/BackgroundUpdateService.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/ContentView.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/CoreDataExtensions.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/DataManager.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/EditHoldingSheet.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/ExportManager.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/ExportSheet.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioChartView.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioDetailView.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioListView.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioManager.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/StockPriceService.swift",
+      "/Users/hnigel/coding/my asset/my asset/my asset/my_assetApp.swift",
+      "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/DerivedSources/resource_bundle_accessor.swift",
+      "-I",
+      "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_AVAILABLE",
+      "-module-cache-path",
+      "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/include/MyAsset-Swift.h",
+      "-swift-version",
+      "5",
+      "-I",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-L",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-plugin-path",
+      "/Library/Developer/CommandLineTools/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "my_asset",
+      "-driver-use-frontend-path",
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "MyAsset" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/AddHoldingSheet.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/BackgroundUpdateService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/ContentView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/CoreDataExtensions.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/DataManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/EditHoldingSheet.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/ExportManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/ExportSheet.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioChartView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioDetailView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioListView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/PortfolioManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/StockPriceService.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/my asset/my asset/my_assetApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/DerivedSources/resource_bundle_accessor.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/sources"
+    },
+    "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+    }
+  }
+}

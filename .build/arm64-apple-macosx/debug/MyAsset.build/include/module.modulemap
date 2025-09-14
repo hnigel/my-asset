@@ -1,0 +1,3 @@
+module MyAsset {
+    header "/Users/hnigel/coding/my asset/.build/arm64-apple-macosx/debug/MyAsset.build/include/MyAsset-Swift.h"
+}

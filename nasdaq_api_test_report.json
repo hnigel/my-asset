@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-09-11T16:32:49.251788",
+  "quote_api": {
+    "success_rate": 86.95652173913044,
+    "avg_response_time": 0.25001749992370603,
+    "total_tests": 23,
+    "successful_tests": 20,
+    "failed_tests": 3
+  },
+  "dividend_api": {
+    "success_rate": 86.95652173913044,
+    "avg_response_time": 0.05603080987930298,
+    "total_tests": 23,
+    "successful_tests": 20,
+    "failed_tests": 3
+  },
+  "data_accuracy": {
+    "dividend_coverage": 28.57142857142857
+  }
+}

@@ -33,7 +33,20 @@
       "Bash(./test_finnhub_api.sh:*)",
       "Bash(mv:*)",
       "Bash(open:*)",
-      "Bash(gemini:*)"
+      "Bash(gemini:*)",
+      "Bash(./ConcurrencyTest)",
+      "Bash(xcrun swift:*)",
+      "Bash(./CompilationTest)",
+      "Bash(codex:*)",
+      "Bash(source:*)",
+      "Read(//Users/hnigel/.codex/**)",
+      "Bash(./FinalValidationTest.swift)",
+      "Bash(./CompilationValidationTest.swift)",
+      "Bash(./ConcurrencyPatternTest)",
+      "Bash(./FinalBuildTest)",
+      "Bash(./AsyncAwaitTest)",
+      "Bash(./ExportManagerTest)",
+      "Bash(./CompilationTest.swift)"
     ],
     "deny": [],
     "ask": []

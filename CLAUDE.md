@@ -4,6 +4,12 @@ The orignal prompt is from: https://www.dzombak.com/blog/2025/08/getting-good-re
 - 你可以使用「gemini -p "xxx"」來呼叫 gemini cli 這個工具做事情，gemini cli 的上下文token 很大，你可以用它找專案裡的程式碼，上網查資料等。但禁止使用它修改或刪除檔案。以下是一個使用範例
 - Bash（gemini -p "找出專案裡使用 xAI 的地方"）
 
+- 你可以使用「codex exec "xxx"」來呼叫 codex cli 這個工具做程式碼相關的任務，codex 專精於程式碼生成、程式碼分析、程式碼重構等任務，並且有權限修改或刪除檔案。以下是使用範例
+- Bash（codex exec "分析這段 Swift 程式碼的效能瓶頸"）
+- Bash（codex exec "重構這個函數以提高可讀性"）
+- Bash（codex exec "優化這個演算法的時間複雜度"）
+- codex 的 api key 已設定在環境變數 OPENAI_API_KEY 中
+
 # Development Guidelines
 
 ## Philosophy

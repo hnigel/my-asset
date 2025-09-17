@@ -46,7 +46,15 @@
       "Bash(./FinalBuildTest)",
       "Bash(./AsyncAwaitTest)",
       "Bash(./ExportManagerTest)",
-      "Bash(./CompilationTest.swift)"
+      "Bash(./CompilationTest.swift)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:trackyourdividends.com)",
+      "Bash(for file in \"/Users/hnigel/coding/my asset/my asset/my asset/DividendCalculationService.swift\" \"/Users/hnigel/coding/my asset/my asset/my asset/PortfolioDetailView.swift\")",
+      "Bash(do echo \"Testing $file...\")",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "Bash(git --version)",
+      "Bash(git rev-list:*)"
     ],
     "deny": [],
     "ask": []

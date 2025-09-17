@@ -30,6 +30,13 @@ The orignal prompt is from: https://www.dzombak.com/blog/2025/08/getting-good-re
 
 ## Process
 
+### 0. Auto-Commit Before Tasks
+
+**ALWAYS** commit current state before starting any task:
+- Stage all changes: `git add .`
+- Create commit with timestamp: `git commit -m "Auto-commit before task: [task description] - $(date)"`
+- This ensures we have a restore point before any modifications
+
 ### 1. Planning & Staging
 
 Break complex work into 3-5 stages. Document in `IMPLEMENTATION_PLAN.md`:

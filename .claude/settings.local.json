@@ -55,7 +55,8 @@
       "Bash(done)",
       "Bash(git --version)",
       "Bash(git rev-list:*)",
-      "Bash(git submodule foreach:*)"
+      "Bash(git submodule foreach:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

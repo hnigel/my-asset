@@ -87,7 +87,10 @@
       "Bash(./setup_xcode_env.sh:*)",
       "Bash(ps:*)",
       "Bash(/dev/null)",
-      "Bash(./fix_xcode_permanently.sh:*)"
+      "Bash(./fix_xcode_permanently.sh:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(./create_xcode_project.sh:*)"
     ],
     "deny": [],
     "ask": []

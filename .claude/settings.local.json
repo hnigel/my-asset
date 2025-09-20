@@ -90,7 +90,8 @@
       "Bash(./fix_xcode_permanently.sh:*)",
       "Bash(mkdir:*)",
       "Bash(cp:*)",
-      "Bash(./create_xcode_project.sh:*)"
+      "Bash(./create_xcode_project.sh:*)",
+      "Bash(cd:*)"
     ],
     "deny": [],
     "ask": []

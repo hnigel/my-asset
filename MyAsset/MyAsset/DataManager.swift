@@ -8,7 +8,8 @@ class DataManager: ObservableObject {
     // MARK: - Core Data Stack
     
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "AssetModel")
+        let model = DataManager.createManagedObjectModel()
+        let container = NSPersistentContainer(name: "AssetModel", managedObjectModel: model)
         
         // Configure persistent store options for better performance and migration support
         let description = container.persistentStoreDescriptions.first

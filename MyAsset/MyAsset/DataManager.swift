@@ -195,10 +195,8 @@ class DataManager: ObservableObject {
                 }
                 
                 // Ensure current price is valid
-                if let currentPrice = stock.currentPrice, currentPrice.decimalValue < 0 {
-                    stock.currentPrice = NSDecimalNumber.zero
-                } else if stock.currentPrice == nil {
-                    stock.currentPrice = NSDecimalNumber.zero
+                if stock.currentPrice < 0 {
+                    stock.currentPrice = 0
                 }
             }
             
@@ -214,15 +212,10 @@ class DataManager: ObservableObject {
                     continue
                 }
                 
-                // Ensure price per share is valid
-                if let pricePerShare = holding.pricePerShare {
-                    if pricePerShare.decimalValue <= 0 {
-                        context.delete(holding)
-                        os_log("Deleted holding with invalid price", log: .default, type: .info)
-                    }
-                } else {
+                // Ensure average cost is valid
+                if holding.averageCost <= 0 {
                     context.delete(holding)
-                    os_log("Deleted holding with nil price", log: .default, type: .info)
+                    os_log("Deleted holding with invalid average cost", log: .default, type: .info)
                 }
             }
             

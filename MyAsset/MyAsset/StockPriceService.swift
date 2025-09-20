@@ -1,46 +1,5 @@
 import Foundation
 
-struct StockQuote: Codable {
-    let symbol: String
-    let price: Double
-    let companyName: String?
-    let lastUpdated: Date
-    
-    // Simple structure that works with manual initialization
-    // We'll handle Yahoo Finance parsing in the service layer
-    init(symbol: String, price: Double, companyName: String?, lastUpdated: Date) {
-        self.symbol = symbol.uppercased()
-        self.price = price
-        self.companyName = companyName
-        self.lastUpdated = lastUpdated
-    }
-    
-    // For JSON decoding when needed
-    init(from decoder: Decoder) throws {
-        // This will be implemented for other API formats if needed
-        // For now, we'll parse Yahoo Finance manually in the service
-        let container = try decoder.singleValueContainer()
-        let dict = try container.decode([String: String].self)
-        
-        self.symbol = dict["symbol"] ?? ""
-        self.price = Double(dict["price"] ?? "0") ?? 0
-        self.companyName = dict["companyName"]
-        self.lastUpdated = Date()
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(symbol, forKey: .symbol)
-        try container.encode(price, forKey: .price)
-        try container.encode(companyName, forKey: .companyName)
-        try container.encode(lastUpdated, forKey: .lastUpdated)
-    }
-    
-    private enum CodingKeys: String, CodingKey {
-        case symbol, price, companyName, lastUpdated
-    }
-}
-
 // MARK: - Distribution Models
 struct DistributionInfo {
     let symbol: String

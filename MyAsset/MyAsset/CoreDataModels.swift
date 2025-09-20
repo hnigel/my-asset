@@ -9,14 +9,49 @@ struct StockQuote: Codable {
     let changePercent: Double
     let volume: Int64?
     let timestamp: Date
+    let companyName: String?
+    let lastUpdated: Date
     
-    init(symbol: String, price: Double, change: Double = 0.0, changePercent: Double = 0.0, volume: Int64? = nil, timestamp: Date = Date()) {
-        self.symbol = symbol
+    init(symbol: String, price: Double, change: Double = 0.0, changePercent: Double = 0.0, volume: Int64? = nil, timestamp: Date = Date(), companyName: String? = nil, lastUpdated: Date = Date()) {
+        self.symbol = symbol.uppercased()
         self.price = price
         self.change = change
         self.changePercent = changePercent
         self.volume = volume
         self.timestamp = timestamp
+        self.companyName = companyName
+        self.lastUpdated = lastUpdated
+    }
+    
+    // For JSON decoding when needed
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let dict = try container.decode([String: String].self)
+        
+        self.symbol = dict["symbol"] ?? ""
+        self.price = Double(dict["price"] ?? "0") ?? 0
+        self.change = Double(dict["change"] ?? "0") ?? 0
+        self.changePercent = Double(dict["changePercent"] ?? "0") ?? 0
+        self.volume = Int64(dict["volume"] ?? "0")
+        self.companyName = dict["companyName"]
+        self.timestamp = Date()
+        self.lastUpdated = Date()
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(symbol, forKey: .symbol)
+        try container.encode(price, forKey: .price)
+        try container.encode(change, forKey: .change)
+        try container.encode(changePercent, forKey: .changePercent)
+        try container.encode(volume, forKey: .volume)
+        try container.encode(timestamp, forKey: .timestamp)
+        try container.encode(companyName, forKey: .companyName)
+        try container.encode(lastUpdated, forKey: .lastUpdated)
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case symbol, price, change, changePercent, volume, timestamp, companyName, lastUpdated
     }
 }
 
@@ -47,8 +82,10 @@ extension Portfolio {
     }
     
     @NSManaged public var id: UUID?
+    @NSManaged public var portfolioID: UUID?
     @NSManaged public var name: String?
     @NSManaged public var createdAt: Date?
+    @NSManaged public var createdDate: Date?
     @NSManaged public var updatedAt: Date?
     @NSManaged public var holdings: NSSet?
     

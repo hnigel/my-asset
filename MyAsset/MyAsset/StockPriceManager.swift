@@ -1,12 +1,12 @@
 import Foundation
 
+@MainActor
 class StockPriceManager: ObservableObject {
     
     // MARK: - Properties
     
     private var priceCache: [String: (quote: StockQuote, timestamp: Date)] = [:]
     private let cacheValidityInterval: TimeInterval = 300 // 5 minutes
-    private let cacheLock = NSLock() // Thread safety for cache access
     
     // Stock price providers in order of preference
     private let providers: [StockPriceProvider] = [
@@ -21,10 +21,8 @@ class StockPriceManager: ObservableObject {
     func fetchStockPrice(symbol: String) async throws -> StockQuote {
         let cleanSymbol = symbol.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         
-        // Check cache first (thread-safe)
-        cacheLock.lock()
+        // Check cache first (MainActor ensures thread safety)
         let cachedData = priceCache[cleanSymbol]
-        cacheLock.unlock()
         
         if let cachedData = cachedData,
            Date().timeIntervalSince(cachedData.timestamp) < cacheValidityInterval {
@@ -45,10 +43,8 @@ class StockPriceManager: ObservableObject {
                 let quote = try await provider.fetchStockPrice(symbol: cleanSymbol)
                 print("✓ \(provider.providerName) provided data for \(cleanSymbol)")
                 
-                // Cache successful result (thread-safe)
-                cacheLock.lock()
+                // Cache successful result (MainActor ensures thread safety)
                 priceCache[cleanSymbol] = (quote: quote, timestamp: Date())
-                cacheLock.unlock()
                 return quote
                 
             } catch {
@@ -96,32 +92,23 @@ class StockPriceManager: ObservableObject {
     // MARK: - Cache Management
     
     func clearCache() {
-        cacheLock.lock()
         priceCache.removeAll()
-        cacheLock.unlock()
         print("Stock price cache cleared")
     }
     
     func isCached(symbol: String) -> Bool {
-        cacheLock.lock()
         let cachedData = priceCache[symbol.uppercased()]
-        cacheLock.unlock()
         
         guard let cachedData = cachedData else { return false }
         return Date().timeIntervalSince(cachedData.timestamp) < cacheValidityInterval
     }
     
     func setCachedPrice(symbol: String, quote: StockQuote) {
-        cacheLock.lock()
         priceCache[symbol.uppercased()] = (quote: quote, timestamp: Date())
-        cacheLock.unlock()
     }
     
     var cacheSize: Int {
-        cacheLock.lock()
-        let count = priceCache.count
-        cacheLock.unlock()
-        return count
+        return priceCache.count
     }
     
     // MARK: - Provider Management

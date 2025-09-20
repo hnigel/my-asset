@@ -17,6 +17,11 @@ extension DataManager {
         portfolioId.type = .uuid
         portfolioId.isOptional = true
         
+        let portfolioPortfolioID = NSAttributeDescription()
+        portfolioPortfolioID.name = "portfolioID"
+        portfolioPortfolioID.type = .uuid
+        portfolioPortfolioID.isOptional = true
+        
         let portfolioName = NSAttributeDescription()
         portfolioName.name = "name"
         portfolioName.type = .string
@@ -27,12 +32,17 @@ extension DataManager {
         portfolioCreatedAt.type = .date
         portfolioCreatedAt.isOptional = true
         
+        let portfolioCreatedDate = NSAttributeDescription()
+        portfolioCreatedDate.name = "createdDate"
+        portfolioCreatedDate.type = .date
+        portfolioCreatedDate.isOptional = true
+        
         let portfolioUpdatedAt = NSAttributeDescription()
         portfolioUpdatedAt.name = "updatedAt"
         portfolioUpdatedAt.type = .date
         portfolioUpdatedAt.isOptional = true
         
-        portfolioEntity.properties = [portfolioId, portfolioName, portfolioCreatedAt, portfolioUpdatedAt]
+        portfolioEntity.properties = [portfolioId, portfolioPortfolioID, portfolioName, portfolioCreatedAt, portfolioCreatedDate, portfolioUpdatedAt]
         
         // Stock Entity
         let stockEntity = NSEntityDescription()

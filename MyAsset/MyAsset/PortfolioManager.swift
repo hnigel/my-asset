@@ -61,7 +61,7 @@ class PortfolioManager: ObservableObject {
             holding.quantity = quantity
             holding.pricePerShare = NSDecimalNumber(decimal: pricePerShare)
             if let datePurchased = datePurchased {
-                holding.datePurchased = datePurchased
+                holding.purchaseDate = datePurchased
             }
             self.dataManager.save(context: context)
         }
@@ -96,7 +96,7 @@ class PortfolioManager: ObservableObject {
         holding.holdingID = UUID()
         holding.quantity = quantity
         holding.pricePerShare = NSDecimalNumber(decimal: pricePerShare)
-        holding.datePurchased = datePurchased
+        holding.purchaseDate = datePurchased
         holding.stock = stock
         holding.portfolio = portfolio
         
@@ -116,7 +116,7 @@ class PortfolioManager: ObservableObject {
         holding.holdingID = UUID()
         holding.quantity = quantity
         holding.pricePerShare = NSDecimalNumber(decimal: pricePerShare) // This is the purchase price
-        holding.datePurchased = datePurchased
+        holding.purchaseDate = datePurchased
         holding.stock = stock
         holding.portfolio = portfolio
         
@@ -132,14 +132,14 @@ class PortfolioManager: ObservableObject {
         stock.currentPrice = NSDecimalNumber(value: stockQuote.price)
         stock.lastUpdated = stockQuote.lastUpdated
         if let companyName = stockQuote.companyName, !companyName.isEmpty {
-            stock.companyName = companyName
+            stock.name = companyName
         }
         
         let holding = Holding(context: dataManager.context)
         holding.holdingID = UUID()
         holding.quantity = quantity
         holding.pricePerShare = NSDecimalNumber(value: stockQuote.price)
-        holding.datePurchased = datePurchased
+        holding.purchaseDate = datePurchased
         holding.stock = stock
         holding.portfolio = portfolio
         
@@ -175,7 +175,7 @@ class PortfolioManager: ObservableObject {
         let newStock = Stock(context: dataManager.context)
         newStock.stockID = UUID()
         newStock.symbol = cleanSymbol
-        newStock.companyName = ""
+        newStock.name = ""
         newStock.currentPrice = NSDecimalNumber(value: 0)
         newStock.lastUpdated = Date()
         
@@ -303,7 +303,7 @@ extension PortfolioManager {
                 holding.holdingID = UUID()
                 holding.quantity = holdingData.quantity
                 holding.pricePerShare = NSDecimalNumber(decimal: holdingData.pricePerShare)
-                holding.datePurchased = holdingData.datePurchased
+                holding.purchaseDate = holdingData.datePurchased
                 holding.stock = stock
                 holding.portfolio = portfolioInContext
             }
@@ -332,7 +332,7 @@ extension PortfolioManager {
         let newStock = Stock(context: context)
         newStock.stockID = UUID()
         newStock.symbol = cleanSymbol
-        newStock.companyName = ""
+        newStock.name = ""
         newStock.currentPrice = NSDecimalNumber(value: 0)
         newStock.lastUpdated = Date()
         

@@ -144,8 +144,8 @@ class BackgroundUpdateService: ObservableObject, @unchecked Sendable {
                     stock.lastUpdated = quote.lastUpdated
                     
                     // Always update company name if it's empty (doesn't interfere with user data)
-                    if stock.companyName?.isEmpty ?? true {
-                        stock.companyName = quote.companyName ?? symbol
+                    if stock.name?.isEmpty ?? true {
+                        stock.name = quote.companyName ?? symbol
                     }
                     
                     // Add price history

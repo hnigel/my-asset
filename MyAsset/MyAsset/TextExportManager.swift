@@ -128,7 +128,7 @@ class TextExportManager: ObservableObject {
         }
         
         let symbol = stock.symbol ?? "UNKNOWN"
-        let companyName = stock.companyName ?? "Unknown Company"
+        let companyName = stock.name ?? "Unknown Company"
         let quantity = holding.quantity
         let currentPrice = stock.effectiveCurrentPrice ?? 0
         let purchasePrice = holding.pricePerShare?.decimalValue ?? 0
@@ -153,7 +153,7 @@ class TextExportManager: ObservableObject {
         }
         detail += "\n"
         
-        detail += "   Quantity: \(formatQuantity(quantity)) shares\n"
+        detail += "   Quantity: \(formatQuantity(Int32(quantity))) shares\n"
         detail += "   Current Price: \(formatCurrency(currentPrice))\n"
         detail += "   Purchase Price: \(formatCurrency(purchasePrice))\n"
         detail += "   Current Value: \(formatCurrency(currentValue))\n"
@@ -162,7 +162,7 @@ class TextExportManager: ObservableObject {
         let gainLossPrefix = totalGainLoss >= 0 ? "+" : ""
         detail += "   \(gainLossSymbol) Gain/Loss: \(gainLossPrefix)\(formatCurrency(totalGainLoss)) (\(gainLossPrefix)\(formatPercentage(gainLossPercent)))\n"
         
-        if let purchaseDate = holding.datePurchased {
+        if let purchaseDate = holding.purchaseDate {
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
             detail += "   Purchase Date: \(formatter.string(from: purchaseDate))"

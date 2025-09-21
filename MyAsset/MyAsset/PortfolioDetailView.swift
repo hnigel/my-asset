@@ -318,7 +318,7 @@ struct PortfolioDetailView: View {
                 // Additional diagnostic info
                 print("ℹ️ [HOLDING VALIDATION] Holding quantity: \(contextHolding.quantity)")
                 print("ℹ️ [HOLDING VALIDATION] Holding price per share: \(contextHolding.pricePerShare?.stringValue ?? "nil")")
-                print("ℹ️ [HOLDING VALIDATION] Holding date purchased: \(contextHolding.datePurchased?.description ?? "nil")")
+                print("ℹ️ [HOLDING VALIDATION] Holding date purchased: \(contextHolding.purchaseDate?.description ?? "nil")")
                 
                 print("✅ [HOLDING VALIDATION] All validation checks passed")
                 continuation.resume(returning: true)
@@ -606,7 +606,7 @@ struct HoldingRowView: View {
                     .font(.headline)
                     .fontWeight(.semibold)
                 
-                Text(holding.stock?.companyName ?? "")
+                Text(holding.stock?.name ?? "")
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .lineLimit(1)

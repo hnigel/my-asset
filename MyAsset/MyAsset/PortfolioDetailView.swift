@@ -28,16 +28,18 @@ struct PortfolioDetailView: View {
     }
     @State private var changeNotificationCancellable: AnyCancellable?
     
+    private var portfolioSummaryId: String {
+        let holdingIds = holdings.map { $0.objectID.description }
+        let joinedIds = holdingIds.joined()
+        return "portfolio-summary-\(holdings.count)-\(joinedIds)"
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 16) {
                 // Portfolio Summary Card
                 PortfolioSummaryCard(portfolio: portfolio, portfolioManager: portfolioManager, holdings: holdings, dividendService: dividendService)
-                    .id({
-                        let holdingIds = holdings.map { $0.objectID.description }
-                        let joinedIds = holdingIds.joined()
-                        return "portfolio-summary-\(holdings.count)-\(joinedIds)"
-                    }())
+                    .id(portfolioSummaryId)
                 
                 // Holdings List
                 HoldingsListView(

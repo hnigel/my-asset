@@ -195,8 +195,10 @@ class DataManager: ObservableObject {
                 }
                 
                 // Ensure current price is valid
-                if stock.currentPrice < 0 {
-                    stock.currentPrice = 0
+                if let currentPrice = stock.currentPrice, currentPrice.doubleValue < 0 {
+                    stock.currentPrice = NSDecimalNumber.zero
+                } else if stock.currentPrice == nil {
+                    stock.currentPrice = NSDecimalNumber.zero
                 }
             }
             

@@ -94,7 +94,7 @@ class PortfolioManager: ObservableObject {
         
         let holding = Holding(context: dataManager.context)
         holding.id = UUID()
-        holding.quantity = quantity
+        holding.quantity = Double(quantity)
         holding.pricePerShare = NSDecimalNumber(decimal: pricePerShare)
         holding.purchaseDate = datePurchased
         holding.stock = stock
@@ -114,7 +114,7 @@ class PortfolioManager: ObservableObject {
         
         let holding = Holding(context: dataManager.context)
         holding.id = UUID()
-        holding.quantity = quantity
+        holding.quantity = Double(quantity)
         holding.pricePerShare = NSDecimalNumber(decimal: pricePerShare) // This is the purchase price
         holding.purchaseDate = datePurchased
         holding.stock = stock
@@ -137,7 +137,7 @@ class PortfolioManager: ObservableObject {
         
         let holding = Holding(context: dataManager.context)
         holding.id = UUID()
-        holding.quantity = quantity
+        holding.quantity = Double(quantity)
         holding.pricePerShare = NSDecimalNumber(value: stockQuote.price)
         holding.purchaseDate = datePurchased
         holding.stock = stock

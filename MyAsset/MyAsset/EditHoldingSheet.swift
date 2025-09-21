@@ -184,12 +184,12 @@ struct EditHoldingSheet: View {
                             let dividendCount = dividendsSet?.count ?? 0
                             
                             if let latestDividend = latestValidDividend {
-                                        // Annual Dividend - 核心資訊
-                                        HStack {
-                                            Text("Annual Dividend:")
-                                                .fontWeight(.semibold)
-                                                .foregroundColor(.primary)
-                                            Spacer()
+                                // Annual Dividend - 核心資訊
+                                HStack {
+                                    Text("Annual Dividend:")
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.primary)
+                                    Spacer()
                                             if let annualizedAmount = latestDividend.annualizedAmount?.decimalValue, annualizedAmount > 0 {
                                                 Text(annualizedAmount, format: .currency(code: "USD"))
                                                     .fontWeight(.bold)
@@ -246,7 +246,7 @@ struct EditHoldingSheet: View {
                                         }
                                         
                                         // Full Name (from stock)
-                                        if let stock = latestDividend.stock, let fullName = stock.companyName, !fullName.isEmpty {
+                                        if let stock = latestDividend.stock, let fullName = stock.name, !fullName.isEmpty {
                                             HStack {
                                                 Text("Full Name:")
                                                     .fontWeight(.medium)
@@ -267,7 +267,6 @@ struct EditHoldingSheet: View {
                                                 .foregroundColor(.secondary)
                                                 .font(.caption)
                                         }
-                                    }
                                 } else {
                                     VStack(alignment: .leading, spacing: 4) {
                                         Text("No valid distribution data available")
@@ -278,7 +277,6 @@ struct EditHoldingSheet: View {
                                             .font(.caption2)
                                     }
                                 }
-                            }
                         }
                         
                         Section {

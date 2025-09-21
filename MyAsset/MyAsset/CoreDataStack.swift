@@ -61,8 +61,8 @@ extension DataManager {
         
         let stockCurrentPrice = NSAttributeDescription()
         stockCurrentPrice.name = "currentPrice"
-        stockCurrentPrice.type = .double
-        stockCurrentPrice.defaultValue = 0.0
+        stockCurrentPrice.type = .decimal
+        stockCurrentPrice.isOptional = true
         
         let stockPreviousClose = NSAttributeDescription()
         stockPreviousClose.name = "previousClose"
@@ -104,7 +104,12 @@ extension DataManager {
         stockLastUpdated.type = .date
         stockLastUpdated.isOptional = true
         
-        stockEntity.properties = [stockSymbol, stockName, stockCurrentPrice, stockPreviousClose, stockChange, stockChangePercent, stockVolume, stockMarketCap, stockSector, stockIndustry, stockLastUpdated]
+        let stockStockID = NSAttributeDescription()
+        stockStockID.name = "stockID"
+        stockStockID.type = .uuid
+        stockStockID.isOptional = true
+        
+        stockEntity.properties = [stockSymbol, stockName, stockCurrentPrice, stockPreviousClose, stockChange, stockChangePercent, stockVolume, stockMarketCap, stockSector, stockIndustry, stockLastUpdated, stockStockID]
         
         // Holding Entity
         let holdingEntity = NSEntityDescription()
@@ -141,7 +146,12 @@ extension DataManager {
         holdingUpdatedAt.type = .date
         holdingUpdatedAt.isOptional = true
         
-        holdingEntity.properties = [holdingId, holdingQuantity, holdingAverageCost, holdingPurchaseDate, holdingCreatedAt, holdingUpdatedAt]
+        let holdingPricePerShare = NSAttributeDescription()
+        holdingPricePerShare.name = "pricePerShare"
+        holdingPricePerShare.type = .decimal
+        holdingPricePerShare.isOptional = true
+        
+        holdingEntity.properties = [holdingId, holdingQuantity, holdingAverageCost, holdingPurchaseDate, holdingCreatedAt, holdingUpdatedAt, holdingPricePerShare]
         
         // Dividend Entity
         let dividendEntity = NSEntityDescription()
@@ -155,8 +165,8 @@ extension DataManager {
         
         let dividendAmount = NSAttributeDescription()
         dividendAmount.name = "amount"
-        dividendAmount.type = .double
-        dividendAmount.defaultValue = 0.0
+        dividendAmount.type = .decimal
+        dividendAmount.isOptional = true
         
         let dividendExDate = NSAttributeDescription()
         dividendExDate.name = "exDate"
@@ -183,7 +193,177 @@ extension DataManager {
         dividendCreatedAt.type = .date
         dividendCreatedAt.isOptional = true
         
-        dividendEntity.properties = [dividendId, dividendAmount, dividendExDate, dividendPayDate, dividendDeclarationDate, dividendFrequency, dividendCreatedAt]
+        let dividendAnnualizedAmount = NSAttributeDescription()
+        dividendAnnualizedAmount.name = "annualizedAmount"
+        dividendAnnualizedAmount.type = .decimal
+        dividendAnnualizedAmount.isOptional = true
+        
+        let dividendYield = NSAttributeDescription()
+        dividendYield.name = "yield"
+        dividendYield.type = .decimal
+        dividendYield.isOptional = true
+        
+        let dividendCurrency = NSAttributeDescription()
+        dividendCurrency.name = "currency"
+        dividendCurrency.type = .string
+        dividendCurrency.isOptional = true
+        
+        let dividendDividendType = NSAttributeDescription()
+        dividendDividendType.name = "dividendType"
+        dividendDividendType.type = .string
+        dividendDividendType.isOptional = true
+        
+        let dividendPaymentDate = NSAttributeDescription()
+        dividendPaymentDate.name = "paymentDate"
+        dividendPaymentDate.type = .date
+        dividendPaymentDate.isOptional = true
+        
+        let dividendExDividendDate = NSAttributeDescription()
+        dividendExDividendDate.name = "exDividendDate"
+        dividendExDividendDate.type = .date
+        dividendExDividendDate.isOptional = true
+        
+        let dividendRecordDate = NSAttributeDescription()
+        dividendRecordDate.name = "recordDate"
+        dividendRecordDate.type = .date
+        dividendRecordDate.isOptional = true
+        
+        let dividendIsUserProvided = NSAttributeDescription()
+        dividendIsUserProvided.name = "isUserProvided"
+        dividendIsUserProvided.type = .boolean
+        dividendIsUserProvided.defaultValue = false
+        
+        let dividendDataSource = NSAttributeDescription()
+        dividendDataSource.name = "dataSource"
+        dividendDataSource.type = .string
+        dividendDataSource.isOptional = true
+        
+        let dividendNotes = NSAttributeDescription()
+        dividendNotes.name = "notes"
+        dividendNotes.type = .string
+        dividendNotes.isOptional = true
+        
+        let dividendLastUpdated = NSAttributeDescription()
+        dividendLastUpdated.name = "lastUpdated"
+        dividendLastUpdated.type = .date
+        dividendLastUpdated.isOptional = true
+        
+        dividendEntity.properties = [dividendId, dividendAmount, dividendExDate, dividendPayDate, dividendDeclarationDate, dividendFrequency, dividendCreatedAt, dividendAnnualizedAmount, dividendYield, dividendCurrency, dividendDividendType, dividendPaymentDate, dividendExDividendDate, dividendRecordDate, dividendIsUserProvided, dividendDataSource, dividendNotes, dividendLastUpdated]
+        
+        // PriceHistory Entity
+        let priceHistoryEntity = NSEntityDescription()
+        priceHistoryEntity.name = "PriceHistory"
+        priceHistoryEntity.managedObjectClassName = "PriceHistory"
+        
+        let priceHistoryPriceHistoryID = NSAttributeDescription()
+        priceHistoryPriceHistoryID.name = "priceHistoryID"
+        priceHistoryPriceHistoryID.type = .uuid
+        priceHistoryPriceHistoryID.isOptional = true
+        
+        let priceHistoryDate = NSAttributeDescription()
+        priceHistoryDate.name = "date"
+        priceHistoryDate.type = .date
+        priceHistoryDate.isOptional = true
+        
+        let priceHistoryOpenPrice = NSAttributeDescription()
+        priceHistoryOpenPrice.name = "openPrice"
+        priceHistoryOpenPrice.type = .decimal
+        priceHistoryOpenPrice.isOptional = true
+        
+        let priceHistoryHighPrice = NSAttributeDescription()
+        priceHistoryHighPrice.name = "highPrice"
+        priceHistoryHighPrice.type = .decimal
+        priceHistoryHighPrice.isOptional = true
+        
+        let priceHistoryLowPrice = NSAttributeDescription()
+        priceHistoryLowPrice.name = "lowPrice"
+        priceHistoryLowPrice.type = .decimal
+        priceHistoryLowPrice.isOptional = true
+        
+        let priceHistoryClosePrice = NSAttributeDescription()
+        priceHistoryClosePrice.name = "closePrice"
+        priceHistoryClosePrice.type = .decimal
+        priceHistoryClosePrice.isOptional = true
+        
+        let priceHistoryVolume = NSAttributeDescription()
+        priceHistoryVolume.name = "volume"
+        priceHistoryVolume.type = .integer64
+        priceHistoryVolume.defaultValue = 0
+        
+        priceHistoryEntity.properties = [priceHistoryPriceHistoryID, priceHistoryDate, priceHistoryOpenPrice, priceHistoryHighPrice, priceHistoryLowPrice, priceHistoryClosePrice, priceHistoryVolume]
+        
+        // AIAnalysisRecord Entity
+        let aiAnalysisRecordEntity = NSEntityDescription()
+        aiAnalysisRecordEntity.name = "AIAnalysisRecord"
+        aiAnalysisRecordEntity.managedObjectClassName = "AIAnalysisRecord"
+        
+        // Core Properties
+        let aiAnalysisId = NSAttributeDescription()
+        aiAnalysisId.name = "id"
+        aiAnalysisId.type = .uuid
+        aiAnalysisId.isOptional = false
+        
+        let aiAnalysisPortfolioID = NSAttributeDescription()
+        aiAnalysisPortfolioID.name = "portfolioID"
+        aiAnalysisPortfolioID.type = .uuid
+        aiAnalysisPortfolioID.isOptional = false
+        
+        let aiAnalysisCreatedDate = NSAttributeDescription()
+        aiAnalysisCreatedDate.name = "createdDate"
+        aiAnalysisCreatedDate.type = .date
+        aiAnalysisCreatedDate.isOptional = false
+        
+        let aiAnalysisLastViewedDate = NSAttributeDescription()
+        aiAnalysisLastViewedDate.name = "lastViewedDate"
+        aiAnalysisLastViewedDate.type = .date
+        aiAnalysisLastViewedDate.isOptional = true
+        
+        // Analysis Configuration
+        let aiAnalysisAnalysisType = NSAttributeDescription()
+        aiAnalysisAnalysisType.name = "analysisType"
+        aiAnalysisAnalysisType.type = .string
+        aiAnalysisAnalysisType.isOptional = false
+        
+        let aiAnalysisPrivacySettingsData = NSAttributeDescription()
+        aiAnalysisPrivacySettingsData.name = "privacySettingsData"
+        aiAnalysisPrivacySettingsData.type = .binaryData
+        aiAnalysisPrivacySettingsData.isOptional = true
+        
+        // Analysis Content
+        let aiAnalysisAiAnalysisText = NSAttributeDescription()
+        aiAnalysisAiAnalysisText.name = "aiAnalysisText"
+        aiAnalysisAiAnalysisText.type = .string
+        aiAnalysisAiAnalysisText.isOptional = false
+        
+        let aiAnalysisPortfolioSummary = NSAttributeDescription()
+        aiAnalysisPortfolioSummary.name = "portfolioSummary"
+        aiAnalysisPortfolioSummary.type = .string
+        aiAnalysisPortfolioSummary.isOptional = false
+        
+        let aiAnalysisCombinedReport = NSAttributeDescription()
+        aiAnalysisCombinedReport.name = "combinedReport"
+        aiAnalysisCombinedReport.type = .string
+        aiAnalysisCombinedReport.isOptional = false
+        
+        // Metadata
+        let aiAnalysisTitle = NSAttributeDescription()
+        aiAnalysisTitle.name = "title"
+        aiAnalysisTitle.type = .string
+        aiAnalysisTitle.isOptional = true
+        
+        let aiAnalysisWordCount = NSAttributeDescription()
+        aiAnalysisWordCount.name = "wordCount"
+        aiAnalysisWordCount.type = .integer32
+        aiAnalysisWordCount.isOptional = false
+        aiAnalysisWordCount.defaultValue = 0
+        
+        let aiAnalysisIsFavorite = NSAttributeDescription()
+        aiAnalysisIsFavorite.name = "isFavorite"
+        aiAnalysisIsFavorite.type = .boolean
+        aiAnalysisIsFavorite.isOptional = false
+        aiAnalysisIsFavorite.defaultValue = false
+        
+        aiAnalysisRecordEntity.properties = [aiAnalysisId, aiAnalysisPortfolioID, aiAnalysisCreatedDate, aiAnalysisLastViewedDate, aiAnalysisAnalysisType, aiAnalysisPrivacySettingsData, aiAnalysisAiAnalysisText, aiAnalysisPortfolioSummary, aiAnalysisCombinedReport, aiAnalysisTitle, aiAnalysisWordCount, aiAnalysisIsFavorite]
         
         // Relationships
         
@@ -244,14 +424,54 @@ extension DataManager {
         stockDividendsRelationship.inverseRelationship = dividendStockRelationship
         dividendStockRelationship.inverseRelationship = stockDividendsRelationship
         
+        // Stock -> PriceHistory (one-to-many)
+        let stockPriceHistoryRelationship = NSRelationshipDescription()
+        stockPriceHistoryRelationship.name = "priceHistory"
+        stockPriceHistoryRelationship.destinationEntity = priceHistoryEntity
+        stockPriceHistoryRelationship.isOptional = true
+        stockPriceHistoryRelationship.deleteRule = .cascadeDeleteRule
+        stockPriceHistoryRelationship.maxCount = 0 // to-many
+        
+        // PriceHistory -> Stock (many-to-one)
+        let priceHistoryStockRelationship = NSRelationshipDescription()
+        priceHistoryStockRelationship.name = "stock"
+        priceHistoryStockRelationship.destinationEntity = stockEntity
+        priceHistoryStockRelationship.isOptional = true
+        priceHistoryStockRelationship.maxCount = 1 // to-one
+        
+        // Set inverse relationships
+        stockPriceHistoryRelationship.inverseRelationship = priceHistoryStockRelationship
+        priceHistoryStockRelationship.inverseRelationship = stockPriceHistoryRelationship
+        
+        // Portfolio -> AIAnalysisRecord (one-to-many)
+        let portfolioAIAnalysisRelationship = NSRelationshipDescription()
+        portfolioAIAnalysisRelationship.name = "aiAnalysisRecords"
+        portfolioAIAnalysisRelationship.destinationEntity = aiAnalysisRecordEntity
+        portfolioAIAnalysisRelationship.isOptional = true
+        portfolioAIAnalysisRelationship.deleteRule = .cascadeDeleteRule
+        portfolioAIAnalysisRelationship.maxCount = 0 // to-many
+        
+        // AIAnalysisRecord -> Portfolio (many-to-one)
+        let aiAnalysisPortfolioRelationship = NSRelationshipDescription()
+        aiAnalysisPortfolioRelationship.name = "portfolio"
+        aiAnalysisPortfolioRelationship.destinationEntity = portfolioEntity
+        aiAnalysisPortfolioRelationship.isOptional = false
+        aiAnalysisPortfolioRelationship.maxCount = 1 // to-one
+        
+        // Set inverse relationships
+        portfolioAIAnalysisRelationship.inverseRelationship = aiAnalysisPortfolioRelationship
+        aiAnalysisPortfolioRelationship.inverseRelationship = portfolioAIAnalysisRelationship
+        
         // Add relationships to entities
-        portfolioEntity.properties.append(contentsOf: [portfolioHoldingsRelationship])
+        portfolioEntity.properties.append(contentsOf: [portfolioHoldingsRelationship, portfolioAIAnalysisRelationship])
         holdingEntity.properties.append(contentsOf: [holdingPortfolioRelationship, holdingStockRelationship])
-        stockEntity.properties.append(contentsOf: [stockHoldingsRelationship, stockDividendsRelationship])
+        stockEntity.properties.append(contentsOf: [stockHoldingsRelationship, stockDividendsRelationship, stockPriceHistoryRelationship])
         dividendEntity.properties.append(contentsOf: [dividendStockRelationship])
+        priceHistoryEntity.properties.append(contentsOf: [priceHistoryStockRelationship])
+        aiAnalysisRecordEntity.properties.append(contentsOf: [aiAnalysisPortfolioRelationship])
         
         // Add entities to model
-        model.entities = [portfolioEntity, stockEntity, holdingEntity, dividendEntity]
+        model.entities = [portfolioEntity, stockEntity, holdingEntity, dividendEntity, priceHistoryEntity, aiAnalysisRecordEntity]
         
         return model
     }

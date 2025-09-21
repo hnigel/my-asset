@@ -34,7 +34,7 @@ struct PortfolioDetailView: View {
         return "portfolio-summary-\(holdings.count)-\(joinedIds)"
     }
     
-    var body: some View {
+    private var mainScrollView: some View {
         ScrollView {
             VStack(spacing: 16) {
                 // Portfolio Summary Card
@@ -95,30 +95,51 @@ struct PortfolioDetailView: View {
             }
             .padding()
         }
-        .navigationTitle(portfolio.name ?? "Portfolio")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                Button(action: { showingAIAnalysis = true }) {
-                    Image(systemName: "brain.head.profile")
-                }
-                
-                Button(action: { showingExportSheet = true }) {
-                    Image(systemName: "square.and.arrow.up")
-                }
-                
-                Button(action: refreshPrices) {
-                    Image(systemName: isRefreshing ? "arrow.clockwise" : "arrow.clockwise")
-                        .rotationEffect(.degrees(isRefreshing ? 360 : 0))
-                        .animation(.linear(duration: 1).repeatWhileActive(isRefreshing), value: isRefreshing)
-                }
-                .disabled(isRefreshing)
-                
-                Button(action: { showingAddHolding = true }) {
-                    Image(systemName: "plus")
-                }
+    }
+    
+    private var navigationToolbar: some ToolbarContent {
+        ToolbarItemGroup(placement: .navigationBarTrailing) {
+            Button(action: { showingAIAnalysis = true }) {
+                Image(systemName: "brain.head.profile")
+            }
+            
+            Button(action: { showingExportSheet = true }) {
+                Image(systemName: "square.and.arrow.up")
+            }
+            
+            Button(action: refreshPrices) {
+                Image(systemName: isRefreshing ? "arrow.clockwise" : "arrow.clockwise")
+                    .rotationEffect(.degrees(isRefreshing ? 360 : 0))
+                    .animation(.linear(duration: 1).repeatWhileActive(isRefreshing), value: isRefreshing)
+            }
+            .disabled(isRefreshing)
+            
+            Button(action: { showingAddHolding = true }) {
+                Image(systemName: "plus")
             }
         }
+    }
+    
+    private var editHoldingBinding: Binding<Bool> {
+        Binding(
+            get: { 
+                print("📋 [SHEET BINDING] get called - showingEditHolding: \(showingEditHolding)")
+                return showingEditHolding 
+            },
+            set: { newValue in 
+                print("📋 [SHEET BINDING] set called - changing from \(showingEditHolding) to \(newValue)")
+                showingEditHolding = newValue 
+            }
+        )
+    }
+    
+    var body: some View {
+        mainScrollView
+            .navigationTitle(portfolio.name ?? "Portfolio")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                navigationToolbar
+            }
         .sheet(isPresented: $showingAddHolding) {
             AddHoldingSheet(portfolio: portfolio, onHoldingAdded: {
                 loadHoldings()
@@ -134,16 +155,7 @@ struct PortfolioDetailView: View {
         .sheet(isPresented: $showingAIAnalysis) {
             AIPortfolioAnalysisView(portfolio: portfolio)
         }
-        .sheet(isPresented: Binding(
-            get: { 
-                print("📋 [SHEET BINDING] get called - showingEditHolding: \(showingEditHolding)")
-                return showingEditHolding 
-            },
-            set: { newValue in 
-                print("📋 [SHEET BINDING] set called - changing from \(showingEditHolding) to \(newValue)")
-                showingEditHolding = newValue 
-            }
-        )) {
+        .sheet(isPresented: editHoldingBinding) {
             print("📋 [EDIT SHEET CLOSURE] Sheet content closure called at: \(Date())")
             print("📋 [EDIT SHEET CLOSURE] showingEditHolding: \(showingEditHolding)")
             print("📋 [EDIT SHEET CLOSURE] holdingToEdit: \(holdingToEdit?.objectID.description ?? "nil")")

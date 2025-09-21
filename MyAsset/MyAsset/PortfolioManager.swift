@@ -39,7 +39,7 @@ class PortfolioManager: ObservableObject {
                 return
             }
             
-            holding.quantity = quantity
+            holding.quantity = Double(quantity)
             holding.pricePerShare = NSDecimalNumber(decimal: pricePerShare)
             self.dataManager.save(context: context)
         }
@@ -58,7 +58,7 @@ class PortfolioManager: ObservableObject {
                 return
             }
             
-            holding.quantity = quantity
+            holding.quantity = Double(quantity)
             holding.pricePerShare = NSDecimalNumber(decimal: pricePerShare)
             if let datePurchased = datePurchased {
                 holding.purchaseDate = datePurchased
@@ -73,15 +73,15 @@ class PortfolioManager: ObservableObject {
             return
         }
         
-        // Use async perform to prevent blocking and deadlocks
-        context.perform {
+        // Use performAndWait to ensure proper context isolation
+        context.performAndWait {
             guard !holding.isDeleted else {
                 print("Warning: Attempting to delete already deleted holding")
                 return
             }
             
             context.delete(holding)
-            self.dataManager.save(context: context)
+            try? context.save()
         }
     }
 
@@ -93,7 +93,7 @@ class PortfolioManager: ObservableObject {
         stock.lastUpdated = Date()
         
         let holding = Holding(context: dataManager.context)
-        holding.holdingID = UUID()
+        holding.id = UUID()
         holding.quantity = quantity
         holding.pricePerShare = NSDecimalNumber(decimal: pricePerShare)
         holding.purchaseDate = datePurchased
@@ -113,7 +113,7 @@ class PortfolioManager: ObservableObject {
         stock.lastUpdated = Date()
         
         let holding = Holding(context: dataManager.context)
-        holding.holdingID = UUID()
+        holding.id = UUID()
         holding.quantity = quantity
         holding.pricePerShare = NSDecimalNumber(decimal: pricePerShare) // This is the purchase price
         holding.purchaseDate = datePurchased
@@ -136,7 +136,7 @@ class PortfolioManager: ObservableObject {
         }
         
         let holding = Holding(context: dataManager.context)
-        holding.holdingID = UUID()
+        holding.id = UUID()
         holding.quantity = quantity
         holding.pricePerShare = NSDecimalNumber(value: stockQuote.price)
         holding.purchaseDate = datePurchased
@@ -300,8 +300,8 @@ extension PortfolioManager {
                 let stock = self.findOrCreateStockInContext(symbol: holdingData.symbol, context: context)
                 
                 let holding = Holding(context: context)
-                holding.holdingID = UUID()
-                holding.quantity = holdingData.quantity
+                holding.id = UUID()
+                holding.quantity = Double(holdingData.quantity)
                 holding.pricePerShare = NSDecimalNumber(decimal: holdingData.pricePerShare)
                 holding.purchaseDate = holdingData.datePurchased
                 holding.stock = stock
@@ -345,7 +345,7 @@ extension PortfolioManager {
         request.predicate = NSPredicate(format: "portfolio == %@", portfolio)
         request.resultType = .dictionaryResultType
         
-        let countExpression = NSExpression(forFunction: "count:", arguments: [NSExpression(forKeyPath: "holdingID")])
+        let countExpression = NSExpression(forFunction: "count:", arguments: [NSExpression(forKeyPath: "id")])
         let countExpressionDescription = NSExpressionDescription()
         countExpressionDescription.name = "count"
         countExpressionDescription.expression = countExpression

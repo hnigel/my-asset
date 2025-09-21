@@ -163,7 +163,7 @@ struct PortfolioDetailView: View {
             } else {
                 print("❌ [EDIT SHEET CLOSURE] holdingToEdit is nil, showing error view")
                 // Fallback view if holding becomes nil
-                return AnyView(NavigationView {
+                AnyView(NavigationView {
                     VStack(spacing: 20) {
                         Image(systemName: "exclamationmark.triangle")
                             .font(.system(size: 50))

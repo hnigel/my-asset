@@ -150,7 +150,7 @@ struct PortfolioDetailView: View {
                 print("📋 [EDIT SHEET CLOSURE] Holding is valid: \(!holding.isDeleted)")
                 print("📋 [EDIT SHEET CLOSURE] Holding context: \(holding.managedObjectContext != nil)")
                 
-                return AnyView(EditHoldingSheet(holding: holding) {
+                AnyView(EditHoldingSheet(holding: holding) {
                     print("📋 [EDIT SHEET COMPLETION] EditHoldingSheet completion called")
                     print("📋 [EDIT SHEET COMPLETION] About to call loadHoldings()")
                     loadHoldings()
@@ -486,7 +486,7 @@ struct PortfolioSummaryCard: View {
         .task {
             await loadDividendInfo()
         }
-        .onChange(of: holdings) { _ in
+        .onChange(of: holdings) {
             Task {
                 await loadDividendInfo()
             }
@@ -571,7 +571,7 @@ struct HoldingsListView: View {
                     .frame(maxWidth: .infinity, minHeight: 100)
             } else {
                 LazyVStack(spacing: 8) {
-                    ForEach(holdings, id: \.holdingID) { holding in
+                    ForEach(holdings, id: \.id) { holding in
                         HoldingRowView(holding: holding, portfolioManager: portfolioManager)
                             .onTapGesture {
                                 onEditRequested(holding)

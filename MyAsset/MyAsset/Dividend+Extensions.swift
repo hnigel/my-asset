@@ -102,7 +102,7 @@ extension Dividend {
     ) -> Dividend {
         let dividend = Dividend(context: context)
         
-        dividend.dividendID = UUID()
+        dividend.id = UUID()
         dividend.amount = amount as NSDecimalNumber
         dividend.currency = currency
         dividend.dividendType = dividendType.rawValue

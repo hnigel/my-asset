@@ -210,6 +210,7 @@ extension Dividend {
     @NSManaged public var payDate: Date?
     @NSManaged public var paymentDate: Date?
     @NSManaged public var exDividendDate: Date?
+    @NSManaged public var recordDate: Date?
     @NSManaged public var declarationDate: Date?
     @NSManaged public var frequency: String?
     @NSManaged public var isUserProvided: Bool

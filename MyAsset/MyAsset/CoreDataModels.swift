@@ -122,6 +122,7 @@ extension Holding {
     @NSManaged public var id: UUID?
     @NSManaged public var quantity: Double
     @NSManaged public var averageCost: Double
+    @NSManaged public var pricePerShare: NSDecimalNumber?
     @NSManaged public var purchaseDate: Date?
     @NSManaged public var createdAt: Date?
     @NSManaged public var updatedAt: Date?

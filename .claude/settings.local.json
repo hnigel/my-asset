@@ -92,7 +92,10 @@
       "Bash(cp:*)",
       "Bash(./create_xcode_project.sh:*)",
       "Bash(cd:*)",
-      "Bash(\"/Users/hnigel/coding/my asset/fix_xcode_permanently.sh\")"
+      "Bash(\"/Users/hnigel/coding/my asset/fix_xcode_permanently.sh\")",
+      "Bash(npm i:*)",
+      "Bash(sudo chown:*)",
+      "Bash(npm cache clean:*)"
     ],
     "deny": [],
     "ask": []

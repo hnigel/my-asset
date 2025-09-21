@@ -47,6 +47,36 @@ struct EditHoldingSheet: View {
         print("🏗️ [EDIT HOLDING INIT] EditHoldingSheet initialization completed for: \(symbol)")
     }
     
+    private var latestValidDividend: Dividend? {
+        // 1. Try to get dividend data, return nil if none exists
+        guard let dividends = holding.stock?.dividends as? Set<Dividend>, !dividends.isEmpty else {
+            return nil
+        }
+
+        // 2. Filter valid dividends (e.g., amount > 0)
+        let validDividends = dividends.filter { dividend in
+            let hasAmount = (dividend.amount?.decimalValue ?? 0) > 0
+            let hasYield = (dividend.yield?.decimalValue ?? 0) > 0
+            let hasFrequency = dividend.frequency != nil
+            return hasAmount || hasYield || hasFrequency
+        }
+
+        // 3. Return nil if no valid dividends
+        guard !validDividends.isEmpty else {
+            return nil
+        }
+
+        // 4. Sort valid dividends by date
+        let sortedDividends = validDividends.sorted { dividend1, dividend2 in
+            let date1 = dividend1.paymentDate ?? dividend1.exDividendDate ?? Date.distantPast
+            let date2 = dividend2.paymentDate ?? dividend2.exDividendDate ?? Date.distantPast
+            return date1 > date2
+        }
+
+        // 5. Return the latest dividend
+        return sortedDividends.first
+    }
+    
     var body: some View {
         NavigationView {
             Group {
@@ -153,23 +183,7 @@ struct EditHoldingSheet: View {
                             let dividendsSet = holding.stock?.dividends as? Set<Dividend>
                             let dividendCount = dividendsSet?.count ?? 0
                             
-                            if let dividends = dividendsSet, !dividends.isEmpty {
-                                let validDividends = dividends.filter { dividend in
-                                    // Filter for valid dividends with meaningful data
-                                    let hasAmount = (dividend.amount?.decimalValue ?? 0) > 0
-                                    let hasYield = (dividend.yield?.decimalValue ?? 0) > 0
-                                    let hasFrequency = dividend.frequency != nil
-                                    return hasAmount || hasYield || hasFrequency
-                                }
-                                
-                                if !validDividends.isEmpty {
-                                    let sortedDividends = validDividends.sorted { dividend1, dividend2 in
-                                        let date1 = dividend1.paymentDate ?? dividend1.exDividendDate ?? Date.distantPast
-                                        let date2 = dividend2.paymentDate ?? dividend2.exDividendDate ?? Date.distantPast
-                                        return date1 > date2
-                                    }
-                                    
-                                    if let latestDividend = sortedDividends.first {
+                            if let latestDividend = latestValidDividend {
                                         // Annual Dividend - 核心資訊
                                         HStack {
                                             Text("Annual Dividend:")
@@ -263,18 +277,6 @@ struct EditHoldingSheet: View {
                                             .foregroundColor(.secondary)
                                             .font(.caption2)
                                     }
-                                }
-                            } else {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("No distribution information available")
-                                        .foregroundColor(.secondary)
-                                        .font(.caption)
-                                    Text("No dividend records found in database")
-                                        .foregroundColor(.secondary)
-                                        .font(.caption2)
-                                    Text("Refresh stock prices to update dividend data")
-                                        .foregroundColor(.blue)
-                                        .font(.caption2)
                                 }
                             }
                         }
@@ -633,16 +635,9 @@ struct EditHoldingSheet: View {
                 let updatedCount = stock.dividends?.count ?? 0
                 print("📊 [DIVIDEND SAVE] Updated dividend count for \(symbol): \(updatedCount)")
                 
-                // Show latest dividend info if available
-                if let dividends = stock.dividends as? Set<Dividend>, !dividends.isEmpty {
-                    let sortedDividends = dividends.sorted { dividend1, dividend2 in
-                        let date1 = dividend1.paymentDate ?? dividend1.exDividendDate ?? Date.distantPast
-                        let date2 = dividend2.paymentDate ?? dividend2.exDividendDate ?? Date.distantPast
-                        return date1 > date2
-                    }
-                    if let latestDividend = sortedDividends.first {
-                        print("📊 [DIVIDEND SAVE] Latest dividend: Annual Dividend=\(latestDividend.annualizedAmount?.decimalValue.description ?? "nil"), Yield=\(latestDividend.yield?.decimalValue.description ?? "nil"), Frequency=\(latestDividend.frequency ?? "nil")")
-                    }
+                // Show latest dividend info if available  
+                if let latestDividend = latestValidDividend {
+                    print("📊 [DIVIDEND SAVE] Latest dividend: Annual Dividend=\(latestDividend.annualizedAmount?.decimalValue.description ?? "nil"), Yield=\(latestDividend.yield?.decimalValue.description ?? "nil"), Frequency=\(latestDividend.frequency ?? "nil")")
                 }
             }
             

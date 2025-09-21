@@ -34,7 +34,7 @@ struct EditHoldingSheet: View {
         // Initialize state with current holding values - with safe fallbacks
         let safeQuantity = max(holding.quantity, 0) // Ensure non-negative
         let safePrice = holding.pricePerShare ?? NSDecimalNumber(value: 0.00)
-        let safeDate = holding.datePurchased ?? Date()
+        let safeDate = holding.purchaseDate ?? Date()
         
         print("🏗️ [EDIT HOLDING INIT] Safe quantity: \(safeQuantity)")
         print("🏗️ [EDIT HOLDING INIT] Safe price: \(safePrice)")
@@ -61,7 +61,7 @@ struct EditHoldingSheet: View {
                                     .fontWeight(.semibold)
                             }
                             
-                            if let companyName = holding.stock?.companyName, !companyName.isEmpty {
+                            if let companyName = holding.stock?.name, !companyName.isEmpty {
                                 HStack {
                                     Text("Company:")
                                         .foregroundColor(.secondary)
@@ -367,7 +367,7 @@ struct EditHoldingSheet: View {
         // Thread-safe validation using the view context
         print("🔄 [EDIT HOLDING VALIDATION] isHoldingValid computed property called")
         
-        let result = viewContext.performAndWait {
+        let result: Bool = viewContext.performAndWait {
             let holdingID = holding.objectID
             let originalSymbol = holding.stock?.symbol ?? "Unknown"
             
@@ -404,7 +404,7 @@ struct EditHoldingSheet: View {
             // Check if we can access basic properties
             let quantity = holding.quantity
             let pricePerShare = holding.pricePerShare
-            let datePurchased = holding.datePurchased
+            let datePurchased = holding.purchaseDate
             
             print("ℹ️ [EDIT HOLDING VALIDATION] Holding quantity: \(quantity)")
             print("ℹ️ [EDIT HOLDING VALIDATION] Holding price per share: \(pricePerShare?.stringValue ?? "nil")")
@@ -495,7 +495,9 @@ struct EditHoldingSheet: View {
             }
             
             // Update the holding with all changes
-            portfolioManager.updateHolding(holding, quantity: quantityInt, pricePerShare: priceDecimal, datePurchased: datePurchased)
+            Task { @MainActor in
+                portfolioManager.updateHolding(holding, quantity: quantityInt, pricePerShare: priceDecimal, datePurchased: datePurchased)
+            }
             
             DispatchQueue.main.async {
                 self.onHoldingUpdated()
@@ -537,7 +539,9 @@ struct EditHoldingSheet: View {
                 return
             }
             
-            portfolioManager.deleteHolding(holding)
+            Task { @MainActor in
+                portfolioManager.deleteHolding(holding)
+            }
             
             DispatchQueue.main.async {
                 self.onHoldingUpdated()
@@ -700,15 +704,15 @@ struct EditHoldingSheet_Previews: PreviewProvider {
         let stock = Stock(context: context)
         stock.stockID = UUID()
         stock.symbol = "AAPL"
-        stock.companyName = "Apple Inc."
+        stock.name = "Apple Inc."
         stock.currentPrice = NSDecimalNumber(value: 150.0)
         stock.lastUpdated = Date()
         
         let holding = Holding(context: context)
-        holding.holdingID = UUID()
+        holding.id = UUID()
         holding.quantity = 10
         holding.pricePerShare = NSDecimalNumber(value: 120.0)
-        holding.datePurchased = Date()
+        holding.purchaseDate = Date()
         holding.stock = stock
         holding.portfolio = portfolio
         

@@ -141,7 +141,7 @@ class TextExportManager: ObservableObject {
         let rawGainLoss = HoldingGainLossCalculator.calculateGainLossWithRawValues(
             currentPrice: currentPrice,
             purchasePrice: purchasePrice, 
-            quantity: quantity,
+            quantity: Int32(quantity),
             symbol: symbol,
             context: "EXPORT-RAW"
         )

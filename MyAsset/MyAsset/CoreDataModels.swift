@@ -133,7 +133,7 @@ extension Holding {
     }
     
     public var currentValue: Double {
-        quantity * (stock?.currentPrice ?? 0)
+        quantity * (stock?.currentPrice?.doubleValue ?? 0)
     }
     
     public var gainLoss: Double {
@@ -157,9 +157,10 @@ extension Stock {
         return NSFetchRequest<Stock>(entityName: "Stock")
     }
     
+    @NSManaged public var stockID: UUID?
     @NSManaged public var symbol: String?
     @NSManaged public var name: String?
-    @NSManaged public var currentPrice: Double
+    @NSManaged public var currentPrice: NSDecimalNumber?
     @NSManaged public var previousClose: Double
     @NSManaged public var change: Double
     @NSManaged public var changePercent: Double
@@ -170,6 +171,7 @@ extension Stock {
     @NSManaged public var lastUpdated: Date?
     @NSManaged public var holdings: NSSet?
     @NSManaged public var dividends: NSSet?
+    @NSManaged public var priceHistory: NSSet?
     
     public var wrappedSymbol: String {
         symbol ?? "UNKNOWN"
@@ -199,15 +201,46 @@ extension Dividend {
     }
     
     @NSManaged public var id: UUID?
-    @NSManaged public var amount: Double
+    @NSManaged public var amount: NSDecimalNumber?
+    @NSManaged public var annualizedAmount: NSDecimalNumber?
+    @NSManaged public var yield: NSDecimalNumber?
+    @NSManaged public var currency: String?
+    @NSManaged public var dividendType: String?
     @NSManaged public var exDate: Date?
     @NSManaged public var payDate: Date?
+    @NSManaged public var paymentDate: Date?
+    @NSManaged public var exDividendDate: Date?
     @NSManaged public var declarationDate: Date?
     @NSManaged public var frequency: String?
+    @NSManaged public var isUserProvided: Bool
+    @NSManaged public var dataSource: String?
+    @NSManaged public var notes: String?
     @NSManaged public var createdAt: Date?
+    @NSManaged public var lastUpdated: Date?
     @NSManaged public var stock: Stock?
     
     public var wrappedFrequency: String {
         frequency ?? "Unknown"
     }
+}
+
+// MARK: - PriceHistory Entity
+@objc(PriceHistory)
+public class PriceHistory: NSManagedObject {
+    
+}
+
+extension PriceHistory {
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<PriceHistory> {
+        return NSFetchRequest<PriceHistory>(entityName: "PriceHistory")
+    }
+    
+    @NSManaged public var priceHistoryID: UUID?
+    @NSManaged public var date: Date?
+    @NSManaged public var openPrice: NSDecimalNumber?
+    @NSManaged public var highPrice: NSDecimalNumber?
+    @NSManaged public var lowPrice: NSDecimalNumber?
+    @NSManaged public var closePrice: NSDecimalNumber?
+    @NSManaged public var volume: Int64
+    @NSManaged public var stock: Stock?
 }

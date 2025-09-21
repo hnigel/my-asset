@@ -29,7 +29,7 @@ class HistoricalDataPersistenceManager {
     func saveHistoricalPrices(_ prices: [HistoricalPrice], for symbol: String) async throws {
         guard !prices.isEmpty else { return }
         
-        try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             dataManager.performInBackground({ context in
                 // Find or create the Stock entity
                 let stock = try self.findOrCreateStock(symbol: symbol, in: context)
@@ -77,7 +77,7 @@ class HistoricalDataPersistenceManager {
         endDate: Date
     ) async throws -> [HistoricalPrice] {
         
-        return try await withCheckedThrowingContinuation { continuation in
+        return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HistoricalPrice], Error>) in
             dataManager.performInBackground({ context in
                 let stock = try self.findStock(symbol: symbol, in: context)
                 guard let stock = stock else {
@@ -121,7 +121,7 @@ class HistoricalDataPersistenceManager {
     
     /// Get the latest available price for a symbol from Core Data
     func fetchLatestPrice(for symbol: String) async throws -> HistoricalPrice? {
-        return try await withCheckedThrowingContinuation { continuation in
+        return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<HistoricalPrice?, Error>) in
             dataManager.performInBackground({ context in
                 let stock = try self.findStock(symbol: symbol, in: context)
                 guard let stock = stock else {
@@ -161,7 +161,7 @@ class HistoricalDataPersistenceManager {
     ) async -> Bool {
         
         do {
-            return try await withCheckedThrowingContinuation { continuation in
+            return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Bool, Error>) in
                 dataManager.performInBackground({ context in
                     let stock = try self.findStock(symbol: symbol, in: context)
                     guard let stock = stock else {
@@ -195,7 +195,7 @@ class HistoricalDataPersistenceManager {
     /// Get available date ranges for a symbol
     func getAvailableDateRanges(for symbol: String) async -> [(startDate: Date, endDate: Date)] {
         do {
-            return try await withCheckedThrowingContinuation { continuation in
+            return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[(startDate: Date, endDate: Date)], Error>) in
                 dataManager.performInBackground({ context in
                     let stock = try self.findStock(symbol: symbol, in: context)
                     guard let stock = stock else {
@@ -244,7 +244,7 @@ class HistoricalDataPersistenceManager {
         endDate: Date? = nil
     ) async throws {
         
-        try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             dataManager.performInBackground({ context in
                 let stock = try self.findStock(symbol: symbol, in: context)
                 guard let stock = stock else {
@@ -287,7 +287,7 @@ class HistoricalDataPersistenceManager {
     func cleanupOldData(retentionDays: Int = 365) async throws {
         let cutoffDate = Calendar.current.date(byAdding: .day, value: -retentionDays, to: Date()) ?? Date()
         
-        try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             dataManager.performInBackground({ context in
                 let fetchRequest: NSFetchRequest<PriceHistory> = PriceHistory.fetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "date < %@", cutoffDate as NSDate)
@@ -323,7 +323,7 @@ class HistoricalDataPersistenceManager {
     
     func getStorageStats() async -> HistoricalDataStorageStats {
         do {
-            return try await withCheckedThrowingContinuation { continuation in
+            return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<HistoricalDataStorageStats, Error>) in
                 dataManager.performInBackground({ context in
                     let priceHistoryRequest: NSFetchRequest<PriceHistory> = PriceHistory.fetchRequest()
                     let totalRecords = try context.count(for: priceHistoryRequest)

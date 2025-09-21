@@ -108,13 +108,18 @@ extension HistoricalPrice {
     /// Creates HistoricalPrice from Core Data PriceHistory entity
     init?(from priceHistory: NSManagedObject, symbol: String, dataSource: String = "CoreData") {
         guard let date = priceHistory.value(forKey: "date") as? Date,
-              let openPrice = priceHistory.value(forKey: "openPrice") as? Decimal,
-              let highPrice = priceHistory.value(forKey: "highPrice") as? Decimal,
-              let lowPrice = priceHistory.value(forKey: "lowPrice") as? Decimal,
-              let closePrice = priceHistory.value(forKey: "closePrice") as? Decimal,
+              let openPriceNS = priceHistory.value(forKey: "openPrice") as? NSDecimalNumber,
+              let highPriceNS = priceHistory.value(forKey: "highPrice") as? NSDecimalNumber,
+              let lowPriceNS = priceHistory.value(forKey: "lowPrice") as? NSDecimalNumber,
+              let closePriceNS = priceHistory.value(forKey: "closePrice") as? NSDecimalNumber,
               let volume = priceHistory.value(forKey: "volume") as? Int64 else {
             return nil
         }
+        
+        let openPrice = openPriceNS.decimalValue
+        let highPrice = highPriceNS.decimalValue
+        let lowPrice = lowPriceNS.decimalValue
+        let closePrice = closePriceNS.decimalValue
         
         self.init(
             date: date,

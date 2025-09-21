@@ -310,7 +310,7 @@ class DividendManager: ObservableObject {
                     print("💾 [DIVIDEND FORCE SAVE] Yield: \(distributionInfo.distributionYieldPercent ?? 0)%")
                     
                     // Store only Annual Dividend, no per-payment calculation
-                    existing.amount = nil // Not needed
+                    existing.amount = 0.0 // Not needed for annual calculation
                     existing.annualizedAmount = NSDecimalNumber(decimal: annualDividend)
                     existing.yield = distributionInfo.distributionYieldPercent.map { NSDecimalNumber(decimal: Decimal($0 / 100)) }
                     existing.currency = "USD"

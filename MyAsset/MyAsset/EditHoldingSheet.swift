@@ -156,15 +156,16 @@ struct EditHoldingSheet: View {
                             if let dividends = dividendsSet, !dividends.isEmpty {
                                 let validDividends = dividends.filter { dividend in
                                     // Filter for valid dividends with meaningful data
-                                    return (dividend.amount?.decimalValue ?? 0) > 0 || 
-                                           (dividend.yield?.decimalValue ?? 0) > 0 ||
-                                           dividend.frequency != nil
+                                    let hasAmount = (dividend.amount?.decimalValue ?? 0) > 0
+                                    let hasYield = (dividend.yield?.decimalValue ?? 0) > 0
+                                    let hasFrequency = dividend.frequency != nil
+                                    return hasAmount || hasYield || hasFrequency
                                 }
                                 
                                 if !validDividends.isEmpty {
-                                    let sortedDividends = validDividends.sorted { 
-                                        let date1 = $0.paymentDate ?? $0.exDividendDate ?? Date.distantPast
-                                        let date2 = $1.paymentDate ?? $1.exDividendDate ?? Date.distantPast
+                                    let sortedDividends = validDividends.sorted { dividend1, dividend2 in
+                                        let date1 = dividend1.paymentDate ?? dividend1.exDividendDate ?? Date.distantPast
+                                        let date2 = dividend2.paymentDate ?? dividend2.exDividendDate ?? Date.distantPast
                                         return date1 > date2
                                     }
                                     
@@ -634,9 +635,9 @@ struct EditHoldingSheet: View {
                 
                 // Show latest dividend info if available
                 if let dividends = stock.dividends as? Set<Dividend>, !dividends.isEmpty {
-                    let sortedDividends = dividends.sorted {
-                        let date1 = $0.paymentDate ?? $0.exDividendDate ?? Date.distantPast
-                        let date2 = $1.paymentDate ?? $1.exDividendDate ?? Date.distantPast
+                    let sortedDividends = dividends.sorted { dividend1, dividend2 in
+                        let date1 = dividend1.paymentDate ?? dividend1.exDividendDate ?? Date.distantPast
+                        let date2 = dividend2.paymentDate ?? dividend2.exDividendDate ?? Date.distantPast
                         return date1 > date2
                     }
                     if let latestDividend = sortedDividends.first {

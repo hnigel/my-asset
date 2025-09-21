@@ -33,7 +33,11 @@ struct PortfolioDetailView: View {
             VStack(spacing: 16) {
                 // Portfolio Summary Card
                 PortfolioSummaryCard(portfolio: portfolio, portfolioManager: portfolioManager, holdings: holdings, dividendService: dividendService)
-                    .id("portfolio-summary-\(holdings.count)-\(holdings.map { $0.objectID.description }.joined())")
+                    .id({
+                        let holdingIds = holdings.map { $0.objectID.description }
+                        let joinedIds = holdingIds.joined()
+                        return "portfolio-summary-\(holdings.count)-\(joinedIds)"
+                    }())
                 
                 // Holdings List
                 HoldingsListView(

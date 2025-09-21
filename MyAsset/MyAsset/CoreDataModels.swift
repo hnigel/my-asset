@@ -55,20 +55,6 @@ struct StockQuote: Codable {
     }
 }
 
-// MARK: - PortfolioDividendInfo
-struct PortfolioDividendInfo {
-    let totalAnnualDividend: Double
-    let totalMonthlyDividend: Double
-    let averageYield: Double
-    let totalYearlyIncome: Double
-    
-    init(totalAnnualDividend: Double = 0.0, totalMonthlyDividend: Double = 0.0, averageYield: Double = 0.0, totalYearlyIncome: Double = 0.0) {
-        self.totalAnnualDividend = totalAnnualDividend
-        self.totalMonthlyDividend = totalMonthlyDividend
-        self.averageYield = averageYield
-        self.totalYearlyIncome = totalYearlyIncome
-    }
-}
 
 // MARK: - Portfolio Entity
 @objc(Portfolio)

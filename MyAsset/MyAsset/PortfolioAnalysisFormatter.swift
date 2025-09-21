@@ -203,7 +203,7 @@ class PortfolioAnalysisFormatter: ObservableObject {
             guard let stock = holding.stock else { continue }
             
             let symbol = stock.symbol ?? "UNKNOWN"
-            let companyName = privacySettings.anonymizeCompanyNames ? "Company-\(symbol)" : (stock.companyName ?? "Unknown Company")
+            let companyName = privacySettings.anonymizeCompanyNames ? "Company-\(symbol)" : (stock.name ?? "Unknown Company")
             
             data += "\n\(index + 1). \(symbol) - \(companyName)\n"
             
@@ -229,7 +229,7 @@ class PortfolioAnalysisFormatter: ObservableObject {
             let gainLossPrefix = gainLossPercent >= 0 ? "+" : ""
             data += "   Performance: \(gainLossPrefix)\(formatPercentage(gainLossPercent))\n"
             
-            if let purchaseDate = holding.datePurchased, privacySettings.includePurchaseDates {
+            if let purchaseDate = holding.purchaseDate, privacySettings.includePurchaseDates {
                 if privacySettings.anonymizeDates {
                     let daysSincePurchase = Calendar.current.dateComponents([.day], from: purchaseDate, to: Date()).day ?? 0
                     data += "   Holding Period: \(daysSincePurchase) days\n"

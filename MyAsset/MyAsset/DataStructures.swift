@@ -1,14 +1,4 @@
 import Foundation
 
-// MARK: - Price History Structure
-struct PriceHistory {
-    let symbol: String
-    let prices: [HistoricalPrice]
-    let lastUpdated: Date
-    
-    init(symbol: String, prices: [HistoricalPrice] = [], lastUpdated: Date = Date()) {
-        self.symbol = symbol
-        self.prices = prices
-        self.lastUpdated = lastUpdated
-    }
-}
+// This file is kept for potential future data structures
+// PriceHistory is now a Core Data entity defined in CoreDataModels.swift

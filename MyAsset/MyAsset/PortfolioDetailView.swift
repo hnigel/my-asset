@@ -95,6 +95,30 @@ struct PortfolioDetailView: View {
             }
             .padding()
         }
+        .modifier(PortfolioSheetsModifier(
+            showingAddHolding: $showingAddHolding,
+            showingExportSheet: $showingExportSheet,
+            showingAIAnalysis: $showingAIAnalysis,
+            editHoldingBinding: editHoldingBinding,
+            showingDeleteConfirmation: $showingDeleteConfirmation,
+            holdingToEdit: $holdingToEdit,
+            holdingToDelete: $holdingToDelete,
+            portfolio: portfolio,
+            exportManager: exportManager,
+            portfolioManager: portfolioManager,
+            onHoldingAdded: loadHoldings,
+            onHoldingDeleted: loadHoldings,
+            refreshDividendData: refreshDividendData
+        ))
+        .modifier(PortfolioLifecycleModifier(
+            onAppear: {
+                loadHoldings()
+                setupChangeNotifications()
+            },
+            onDisappear: {
+                changeNotificationCancellable?.cancel()
+            }
+        ))
     }
     
     private var navigationToolbar: some ToolbarContent {
@@ -137,111 +161,8 @@ struct PortfolioDetailView: View {
         mainScrollView
             .navigationTitle(portfolio.name ?? "Portfolio")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                navigationToolbar
-            }
-        .sheet(isPresented: $showingAddHolding) {
-            AddHoldingSheet(portfolio: portfolio, onHoldingAdded: {
-                loadHoldings()
-                // Auto-refresh dividend data when new stock is added
-                Task {
-                    await refreshDividendData()
-                }
-            })
-        }
-        .sheet(isPresented: $showingExportSheet) {
-            ExportSheet(portfolio: portfolio, exportManager: exportManager)
-        }
-        .sheet(isPresented: $showingAIAnalysis) {
-            AIPortfolioAnalysisView(portfolio: portfolio)
-        }
-        .sheet(isPresented: editHoldingBinding) {
-            print("📋 [EDIT SHEET CLOSURE] Sheet content closure called at: \(Date())")
-            print("📋 [EDIT SHEET CLOSURE] showingEditHolding: \(showingEditHolding)")
-            print("📋 [EDIT SHEET CLOSURE] holdingToEdit: \(holdingToEdit?.objectID.description ?? "nil")")
-            print("📋 [EDIT SHEET CLOSURE] holdingToEdit is nil: \(holdingToEdit == nil)")
-            
-            if let holding = holdingToEdit {
-                print("📋 [EDIT SHEET CLOSURE] holdingToEdit exists - creating EditHoldingSheet")
-                print("📋 [EDIT SHEET CLOSURE] Symbol: \(holding.stock?.symbol ?? "Unknown")")
-                print("📋 [EDIT SHEET CLOSURE] Holding ObjectID: \(holding.objectID)")
-                print("📋 [EDIT SHEET CLOSURE] Holding is valid: \(!holding.isDeleted)")
-                print("📋 [EDIT SHEET CLOSURE] Holding context: \(holding.managedObjectContext != nil)")
-                
-                AnyView(EditHoldingSheet(holding: holding) {
-                    print("📋 [EDIT SHEET COMPLETION] EditHoldingSheet completion called")
-                    print("📋 [EDIT SHEET COMPLETION] About to call loadHoldings()")
-                    loadHoldings()
-                    print("📋 [EDIT SHEET COMPLETION] loadHoldings() completed")
-                    print("📋 [EDIT SHEET COMPLETION] About to clear holdingToEdit")
-                    // Clear the holding reference after update
-                    holdingToEdit = nil
-                    print("📋 [EDIT SHEET COMPLETION] holdingToEdit cleared")
-                })
-            } else {
-                print("❌ [EDIT SHEET CLOSURE] holdingToEdit is nil, showing error view")
-                // Fallback view if holding becomes nil
-                AnyView(NavigationView {
-                    VStack(spacing: 20) {
-                        Image(systemName: "exclamationmark.triangle")
-                            .font(.system(size: 50))
-                            .foregroundColor(.orange)
-                        
-                        Text("Unable to Load Holding")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                        
-                        Text("This holding may have been deleted or is no longer available.")
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                        
-                        Button("Close") {
-                            showingEditHolding = false
-                            holdingToEdit = nil
-                        }
-                        .buttonStyle(.bordered)
-                    }
-                    .padding()
-                    .navigationTitle("Error")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            Button("Close") {
-                                showingEditHolding = false
-                                holdingToEdit = nil
-                            }
-                        }
-                    }
-                })
-            }
-        }
-        .alert("Delete Holding", isPresented: $showingDeleteConfirmation) {
-            Button("Cancel", role: .cancel) {
-                holdingToDelete = nil
-            }
-            Button("Delete", role: .destructive) {
-                if let holding = holdingToDelete {
-                    portfolioManager.deleteHolding(holding)
-                    loadHoldings()
-                }
-                holdingToDelete = nil
-            }
-        } message: {
-            if let holding = holdingToDelete {
-                Text("Are you sure you want to delete your \(holding.stock?.symbol ?? "Unknown") holding? This action cannot be undone.")
-            }
-        }
-        .onAppear {
-            loadHoldings()
-            setupChangeNotifications()
-        }
-        .onDisappear {
-            changeNotificationCancellable?.cancel()
-        }
+            .toolbar { navigationToolbar }
     }
-    
     @MainActor
     private func loadHoldings() {
         // Refresh the portfolio to get latest data (already on main actor)
@@ -719,6 +640,131 @@ struct HoldingRowView: View {
     }
 }
 
+struct PortfolioSheetsModifier: ViewModifier {
+    @Binding var showingAddHolding: Bool
+    @Binding var showingExportSheet: Bool
+    @Binding var showingAIAnalysis: Bool
+    let editHoldingBinding: Binding<Bool>
+    @Binding var showingDeleteConfirmation: Bool
+    @Binding var holdingToEdit: Holding?
+    @Binding var holdingToDelete: Holding?
+    
+    let portfolio: Portfolio
+    let exportManager: ExportManager
+    let portfolioManager: PortfolioManager
+    let onHoldingAdded: () -> Void
+    let onHoldingDeleted: () -> Void
+    let refreshDividendData: () async -> Void
+    
+    func body(content: Content) -> some View {
+        content
+            .sheet(isPresented: $showingAddHolding) {
+                AddHoldingSheet(portfolio: portfolio, onHoldingAdded: {
+                    onHoldingAdded()
+                    Task {
+                        await refreshDividendData()
+                    }
+                })
+            }
+            .sheet(isPresented: $showingExportSheet) {
+                ExportSheet(portfolio: portfolio, exportManager: exportManager)
+            }
+            .sheet(isPresented: $showingAIAnalysis) {
+                AIPortfolioAnalysisView(portfolio: portfolio)
+            }
+            .sheet(isPresented: editHoldingBinding) {
+                editHoldingSheetContent
+            }
+            .alert("Delete Holding", isPresented: $showingDeleteConfirmation) {
+                deleteAlert
+            } message: {
+                deleteAlertMessage
+            }
+    }
+    
+    @ViewBuilder
+    private var editHoldingSheetContent: some View {
+        if let holding = holdingToEdit {
+            EditHoldingSheet(holding: holding) {
+                onHoldingDeleted()
+                holdingToEdit = nil
+            }
+        } else {
+            NavigationView {
+                VStack(spacing: 20) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .font(.system(size: 50))
+                        .foregroundColor(.orange)
+                    
+                    Text("Unable to Load Holding")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                    
+                    Text("This holding may have been deleted or is no longer available.")
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    Button("Close") {
+                        editHoldingBinding.wrappedValue = false
+                        holdingToEdit = nil
+                    }
+                    .buttonStyle(.bordered)
+                }
+                .padding()
+                .navigationTitle("Error")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button("Close") {
+                            editHoldingBinding.wrappedValue = false
+                            holdingToEdit = nil
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var deleteAlert: some View {
+        Button("Cancel", role: .cancel) {
+            holdingToDelete = nil
+        }
+        Button("Delete", role: .destructive) {
+            if let holding = holdingToDelete {
+                portfolioManager.deleteHolding(holding)
+                onHoldingDeleted()
+            }
+            holdingToDelete = nil
+        }
+    }
+    
+    @ViewBuilder
+    private var deleteAlertMessage: some View {
+        if let holding = holdingToDelete {
+            Text("Are you sure you want to delete your \(holding.stock?.symbol ?? "Unknown") holding? This action cannot be undone.")
+        }
+    }
+}
+
+struct PortfolioLifecycleModifier: ViewModifier {
+    let onAppear: () -> Void
+    let onDisappear: () -> Void
+    
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                onAppear()
+            }
+            .onDisappear {
+                onDisappear()
+            }
+    }
+}
 
 extension Animation {
     func repeatWhileActive(_ isActive: Bool) -> Animation {
